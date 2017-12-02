@@ -11,6 +11,8 @@
 #import "YIMEditerSetting.h"
 #import "YIMEditerFontView.h"
 #import "YIMEditerTextView.h"
+#import "DefualtFontItem.h"
+#import "DefualtParagraphItem.h"
 
 @interface ViewController ()
 
@@ -23,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
+    
     
 //    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]init];
 //    for (NSString* f in fonts.allKeys) {
@@ -32,12 +34,19 @@
 //    }
     
     YIMEditerTextView *textView = [[YIMEditerTextView alloc]init];
-//    textView.attributedText = str;
     
     [self.view addSubview:textView];
     textView.translatesAutoresizingMaskIntoConstraints = false;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[textView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.view,textView)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[textView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.view,textView)]];
+
+    
+    DefualtFontItem *item = [[DefualtFontItem alloc]init];
+    DefualtParagraphItem *item1 = [[DefualtParagraphItem alloc]init];
+    
+    textView.menus = @[item,item1];
+    [textView addStyleChangeObject:item.fontView];
+    [textView addStyleChangeObject:item1.paragraphView];
 }
 
 

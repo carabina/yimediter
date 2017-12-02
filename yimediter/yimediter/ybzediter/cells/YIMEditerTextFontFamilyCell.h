@@ -8,6 +8,7 @@
 
 #import "YIMEditerStyleBaseCell.h"
 
+/**字体名cell*/
 @interface YIMEditerTextFontFamilyCell : YIMEditerStyleBaseCell
 
 @end

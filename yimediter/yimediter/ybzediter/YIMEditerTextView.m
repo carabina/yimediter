@@ -13,16 +13,19 @@
 #import "YIMEditerInputAccessoryView.h"
 #import "YIMEditerSetting.h"
 #import "YIMEditerFontView.h"
+#import "YIMEditerParagraphView.h"
 #import "YIMEditerFontFamilyManager.h"
+#import "YIMEditerDrawAttributes.h"
 
 
-@interface YIMEditerTextView()<YIMEditerInputAccessoryViewDelegate,UITextViewDelegate,YIMEditerFontViewDelegate>{
+
+@interface YIMEditerTextView()<YIMEditerInputAccessoryViewDelegate,UITextViewDelegate,YIMEditerStyleChangeDelegate>{
     
 }
-@property(nonatomic,strong)YIMEditerFontView* fontView;
-@property(nonatomic,strong)YIMEditerTextStyle *defualtStyle;
-/**到新window时是否进入第一响应者*/
-@property(nonatomic,assign)BOOL toNewWindowIsBecomeFirstResponder;
+
+@property(nonatomic,strong)NSMutableArray<id<YIMEditerStyleChangeObject>> *allObjects;
+@property(nonatomic,strong)YIMEditerDrawAttributes *defualtDrawAttributed;
+
 @end
 
 @implementation YIMEditerTextView
@@ -44,16 +47,13 @@
 }
 -(void)setUp{
     self.delegate = self;
-    
-    //初始化字体样式
-    self.defualtStyle = [YIMEditerTextStyle createDefualtStyle];
+    self.toNewWindowIsBecomeFirstResponder = true;
+    self.defualtDrawAttributed = [self createDefualtDrawAttributes];
+    self.allObjects = [NSMutableArray array];
     
     YIMEditerInputAccessoryView *accessoryView = [[YIMEditerInputAccessoryView alloc]init];
     accessoryView.delegate = self;
     accessoryView.frame = CGRectMake(0, 0, self.frame.size.width, 38);
-    YIMEditerAccessoryMenuItem *item1 = [[YIMEditerAccessoryMenuItem alloc]initWithImage:[UIImage imageNamed:@"keyboard"]];
-    YIMEditerAccessoryMenuItem *item2 = [[YIMEditerAccessoryMenuItem alloc]initWithImage:[UIImage imageNamed:@"font"]];
-    accessoryView.items = @[item1,item2];
     self.inputAccessoryView = accessoryView;
 }
 -(void)layoutSubviews{
@@ -67,111 +67,98 @@
     if (newWindow) {
         if(self.toNewWindowIsBecomeFirstResponder)
             [self becomeFirstResponder];
-    }else{
-        self.toNewWindowIsBecomeFirstResponder = self.isFirstResponder;
     }
-}
--(BOOL)resignFirstResponder{
-    
-    NSLog(@"a");
-    return [super resignFirstResponder];
 }
 
+
+#pragma -mark get set
+-(void)setMenus:(NSArray<YIMEditerAccessoryMenuItem *> *)menus{
+    NSMutableArray* arr = [NSMutableArray array];
+    [arr addObject:[[YIMEditerAccessoryMenuItem alloc]initWithImage:[UIImage imageNamed:@"keyboard"]]];
+    [arr addObjectsFromArray:menus];
+    _menus = arr;
+    ((YIMEditerInputAccessoryView*)self.inputAccessoryView).items = arr;
+}
+
+#pragma -mark public method
+-(void)addStyleChangeObject:(id<YIMEditerStyleChangeObject>)styleChangeObj{
+    styleChangeObj.styleDelegate = self;
+    [self.defualtDrawAttributed updateAttributed:[styleChangeObj.defualtStyle outPutAttributed]];
+    [self.allObjects addObject:styleChangeObj];
+}
+
+#pragma -mark private method
+/**从选中range中找到选中的段落range*/
+-(NSRange)paragraphRangeWithSelectRange:(NSRange)range{
+    NSInteger minRangIndex = range.location;
+    for (; minRangIndex > 0 && [self.text characterAtIndex:minRangIndex - 1] != '\n'; minRangIndex--)
+        ;
+    NSInteger maxRangeIndex = range.location + range.length;
+    for (; maxRangeIndex < self.text.length && [self.text characterAtIndex:maxRangeIndex - 1] != '\n'; maxRangeIndex++)
+        ;
+    return NSMakeRange(minRangIndex, maxRangeIndex - minRangIndex);
+}
+-(void)setTypingWithAttributed:(YIMEditerDrawAttributes*)attr{
+    self.typingAttributes = attr.textAttributed;
+}
+/**设置文字属性到指定区间*/
+-(void)setTextWithAttributed:(YIMEditerDrawAttributes *)attr range:(NSRange)range{
+    [self.textStorage setAttributes:attr.textAttributed range:range];
+    NSRange paragraphRange = [self paragraphRangeWithSelectRange:range];
+    [self.textStorage addAttributes:attr.paragraphAttributed  range:paragraphRange];
+}
+/**从指定样式文字中提取绘制属性*/
+-(YIMEditerDrawAttributes*)attributedFromAttributedText:(NSAttributedString*)text{
+    NSRange range = {0,0};
+    NSDictionary *attribute = [text attributesAtIndex:0 effectiveRange:&range];
+    if (NSEqualRanges(NSMakeRange(0, text.string.length), range)) {
+        return [[YIMEditerDrawAttributes alloc]initWithAttributeString:attribute];
+    }
+    return [self createDefualtDrawAttributes];
+}
+/**从指定区间提取绘制属性*/
+-(YIMEditerDrawAttributes*)attributedFromRange:(NSRange)range{
+    YIMEditerMutableDrawAttributes *attributes = [[YIMEditerMutableDrawAttributes alloc]init];
+    NSDictionary *textAttributed = [self.textStorage attributesAtIndex:range.location longestEffectiveRange:NULL inRange:range];
+    attributes.textAttributed = textAttributed;
+    
+    NSRange paragraphRange = [self paragraphRangeWithSelectRange:range];
+    NSDictionary *paragraphAttributed = [self.textStorage attributesAtIndex:paragraphRange.location longestEffectiveRange:NULL inRange:paragraphRange];
+    attributes.paragraphAttributed = paragraphAttributed;
+    return attributes;
+}
+-(YIMEditerDrawAttributes*)createDefualtDrawAttributes{
+    YIMEditerDrawAttributes *attr = [[YIMEditerDrawAttributes alloc]init];
+    for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+        [attr updateAttributed:[obj.defualtStyle outPutAttributed]];
+    }
+    return attr;
+}
+-(YIMEditerDrawAttributes*)currentAttributes{
+    YIMEditerDrawAttributes *attr = [[YIMEditerDrawAttributes alloc]init];
+    for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+        [attr updateAttributed:[obj.currentStyle outPutAttributed]];
+    }
+    return attr;
+}
+
+#pragma -mark delegate functions
+/**样式切换时*/
+-(void)style:(id)sender didChange:(YIMEditerStyle *)newStyle{
+    YIMEditerDrawAttributes *currentAttributes = [self currentAttributes];
+    [currentAttributes updateAttributed:[newStyle outPutAttributed]];
+    [self setTextWithAttributed:currentAttributes range:self.selectedRange];
+    self.typingAttributes = currentAttributes.textAttributed;
+}
 /**AccessoryView选择时*/
 -(void)YIMEditerInputAccessoryView:(YIMEditerInputAccessoryView*)accessoryView clickItemAtIndex:(NSInteger)index{
-    switch (index) {
-        case 0:
-            self.inputView = nil;
-            break;
-        case 1:{
-            self.inputView = self.fontView;
-            break;
-        }
-        default:
-            break;
-    }
+    [self.menus[index] clickAction];
+    self.inputView = [self.menus[index] menuItemInputView];
     [self reloadInputViews];
 }
 
-#pragma -mark get set
--(YIMEditerFontView*)fontView{
-    if (!_fontView) {
-        _fontView = [[YIMEditerFontView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 280)];
-        _fontView.textStyle = self.defualtStyle;
-        _fontView.delegate = self;
-    }
-    return _fontView;
-}
 
-
-#pragma -mark private methods
--(NSDictionary*)attributeWithTextStyle:(YIMEditerTextStyle*)style{
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    NSNumber *weight = [NSNumber numberWithFloat:0];
-    NSValue *matrix = [NSValue valueWithCGAffineTransform:CGAffineTransformIdentity];
-    if (style.bold) {
-        weight = [NSNumber numberWithFloat:0.4];
-    }
-    if (style.italic) {
-        matrix = [NSValue valueWithCGAffineTransform:CGAffineTransformMake(1, 0, tanf(15 * (CGFloat)M_PI / 180), 1, 0, 0)];
-    }
-    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:
-                                        @{
-                                          UIFontDescriptorNameAttribute:style.fontName,
-                                          UIFontDescriptorSizeAttribute:@(style.fontSize),
-                                          UIFontDescriptorMatrixAttribute:matrix,
-                                          UIFontDescriptorTraitsAttribute:@{UIFontWeightTrait:weight}
-                                          }];
-    UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:style.fontSize];
-    if (style.underline) {
-        [attributes setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
-    }
-    [attributes setObject:font forKey:NSFontAttributeName];
-    [attributes setObject:style.textColor forKey:NSForegroundColorAttributeName];
-    return attributes;
-}
--(YIMEditerTextStyle*)styleWithAttributeString:(NSAttributedString*)string{
-    YIMEditerTextStyle *style = [YIMEditerTextStyle createDefualtStyle];
-    NSRange range = {0,0};
-    NSDictionary *attribute = [string attributesAtIndex:0 effectiveRange:&range];
-    if (NSEqualRanges(NSMakeRange(0, string.string.length), range)) {
-        if ([attribute.allKeys containsObject:NSFontAttributeName]) {
-            UIFont *font = [attribute objectForKey:NSFontAttributeName];
-            UIFontDescriptor *descroptor = font.fontDescriptor;
-            BOOL isItalic = descroptor.fontAttributes[@"NSCTFontMatrixAttribute"] != nil;
-            
-            CTFontRef ctFont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
-            CTFontSymbolicTraits traits = CTFontGetSymbolicTraits(ctFont);
-            BOOL isBold = ((traits & kCTFontBoldTrait) == kCTFontBoldTrait);
-            CFRelease(ctFont);
-            
-            style.fontName = font.fontName;
-            style.italic = isItalic;
-            style.bold = isBold;
-            style.fontSize = font.pointSize;
-        }
-        if ([attribute.allKeys containsObject:NSForegroundColorAttributeName]) {
-            style.textColor = [attribute objectForKey:NSForegroundColorAttributeName];
-        }
-        if ([attribute.allKeys containsObject:NSUnderlineStyleAttributeName]) {
-            style.underline = true;
-        }
-    }
-    return style;
-}
-
-#pragma -mark YIMEditerFontViewDelegate Function
--(void)fontView:(YIMEditerFontView*)fontView styleDidChange:(YIMEditerTextStyle*)style{
-    if (self.selectedRange.length != 0) {
-        [self.textStorage setAttributes:[self attributeWithTextStyle:style] range:self.selectedRange];
-        NSLog(@"selected");
-    }else{
-        NSLog(@"not selected");
-    }
-    self.defualtStyle = [style copy];;
-}
-
-#pragma -mark Delegate Functions
+#pragma -mark TextView Delegate Functions
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     NSLog(@"ShouldBeginEditing");
     if ([self.userDelegates respondsToSelector:@selector(textViewShouldBeginEditing:)]) {
@@ -202,7 +189,11 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     NSLog(@"shouldChangeTextInRange");
-    self.typingAttributes = [self attributeWithTextStyle:self.fontView.textStyle];
+    for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+        [self.defualtDrawAttributed updateAttributed:[obj.currentStyle outPutAttributed]];
+    }
+    self.typingAttributes = self.defualtDrawAttributed.textAttributed;
+    
     if ([self.userDelegates respondsToSelector:@selector(textView:shouldChangeTextInRange:replacementText:)]) {
         return [self.userDelegates textView:textView shouldChangeTextInRange:range replacementText:text];
     }
@@ -217,23 +208,40 @@
 
 - (void)textViewDidChangeSelection:(UITextView *)textView{
     NSLog(@"DidChangeSelection");
-    YIMEditerTextStyle *style = nil;
+    YIMEditerDrawAttributes *attributes = nil;
+    //如果有选中文字，修改选中文字的样式
     if (self.selectedRange.length) {
-        style = [self styleWithAttributeString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
+        attributes = [self attributedFromRange:self.selectedRange];
     }else{
+        //当前没有文字 使用默认样式
         if(self.text.length == 0){
-            style = self.defualtStyle;
-        }else if(self.selectedRange.location == self.text.length){
-            style = [self styleWithAttributeString:[self.textStorage attributedSubstringFromRange:NSMakeRange(self.text.length - 1, 1)]];
+            attributes = self.defualtDrawAttributed;
+        }else if(self.selectedRange.location > 0){
+            //通常取光标前一个字符的属性为当前样式
+            //但是如果前一个字符是换行符时，需要取换行符后面的字符样式为当前样式。因为换行符的属性属于上一个段落的，而当前光标位置并不希望得到上一个段落的样式
+            if ([self.text characterAtIndex:(self.selectedRange.location + self.selectedRange.length - 1)] == '\n') {
+                //如果光标后面还有字符
+                if (self.text.length > self.selectedRange.location + self.selectedRange.length) {
+                    attributes = [self attributedFromRange:NSMakeRange(self.selectedRange.location, 1)];
+                }else{
+                    attributes = [self defualtDrawAttributed];
+                }
+            }else{
+                attributes = [self attributedFromRange:NSMakeRange(self.selectedRange.location - 1, 1)];
+            }
         }else{
-            style = [self styleWithAttributeString:[self.textStorage attributedSubstringFromRange:NSMakeRange(self.selectedRange.location - 1, 1)]];
+            attributes = [[YIMEditerDrawAttributes alloc]init];
         }
     }
-    self.fontView.textStyle = style;
-    self.defualtStyle = [style copy];;
+    for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+        [obj updateUIWithTextAttributes:attributes];
+    }
+    self.defualtDrawAttributed = attributes;
+    [self setTypingWithAttributed:attributes];
     if ([self.userDelegates respondsToSelector:@selector(textViewDidChangeSelection:)]) {
         [self.userDelegates textViewDidChangeSelection:textView];
     }
+    NSLog(@"%@",self.typingAttributes);
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0

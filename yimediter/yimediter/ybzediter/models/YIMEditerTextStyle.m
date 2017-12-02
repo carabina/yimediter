@@ -6,11 +6,77 @@
 //  Copyright © 2017年 ybz. All rights reserved.
 //
 
+#import <CoreText/CoreText.h>
+
 #import "YIMEditerTextStyle.h"
 #import "YIMEditerFontFamilyManager.h"
+#import "YIMEditerDrawAttributes.h"
+
 
 @implementation YIMEditerTextStyle
 
+
+
+
+-(instancetype)initWithAttributed:(YIMEditerDrawAttributes *)drawAttributes{
+    NSDictionary *attribute = drawAttributes.textAttributed;
+    self = [[self class]createDefualtStyle];
+    if ([attribute.allKeys containsObject:NSFontAttributeName]) {
+        UIFont *font = [attribute objectForKey:NSFontAttributeName];
+        UIFontDescriptor *descroptor = font.fontDescriptor;
+        BOOL isItalic = descroptor.fontAttributes[@"NSCTFontMatrixAttribute"] != nil;
+        
+        CTFontRef ctFont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
+        CTFontSymbolicTraits traits = CTFontGetSymbolicTraits(ctFont);
+        BOOL isBold = ((traits & kCTFontBoldTrait) == kCTFontBoldTrait);
+        CFRelease(ctFont);
+        
+        self.fontName = font.familyName;
+        self.italic = isItalic;
+        self.bold = isBold;
+        self.fontSize = font.pointSize;
+    }
+    if ([attribute.allKeys containsObject:NSForegroundColorAttributeName]) {
+        self.textColor = [attribute objectForKey:NSForegroundColorAttributeName];
+    }
+    if ([attribute.allKeys containsObject:NSUnderlineStyleAttributeName]) {
+        if ([attribute[NSUnderlineStyleAttributeName] integerValue] == NSUnderlineStyleNone) {
+            self.underline = false;
+        }else{
+            self.underline = true;
+        }
+    }
+    return self;
+}
+-(YIMEditerDrawAttributes*)outPutAttributed{
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    NSNumber *weight = [NSNumber numberWithFloat:0];
+    NSValue *matrix = [NSValue valueWithCGAffineTransform:CGAffineTransformIdentity];
+    if (self.bold) {
+        weight = [NSNumber numberWithFloat:0.4];
+    }
+    if (self.italic) {
+        matrix = [NSValue valueWithCGAffineTransform:CGAffineTransformMake(1, 0, tanf(15 * (CGFloat)M_PI / 180), 1, 0, 0)];
+    }
+    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:
+                                        @{
+                                          UIFontDescriptorFamilyAttribute:self.fontName,
+                                          UIFontDescriptorSizeAttribute:@(self.fontSize),
+                                          UIFontDescriptorMatrixAttribute:matrix,
+                                          UIFontDescriptorTraitsAttribute:@{UIFontWeightTrait:weight}
+                                          }];
+    UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:self.fontSize];
+    if (self.underline) {
+        [attributes setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+    }else{
+        [attributes setObject:@(NSUnderlineStyleNone) forKey:NSUnderlineStyleAttributeName];
+    }
+    [attributes setObject:font forKey:NSFontAttributeName];
+    [attributes setObject:self.textColor forKey:NSForegroundColorAttributeName];
+    YIMEditerMutableDrawAttributes *drawAttributes = [[YIMEditerMutableDrawAttributes alloc]init];
+    drawAttributes.textAttributed = attributes;
+    return drawAttributes;
+}
 
 +(instancetype)createDefualtStyle{
     YIMEditerTextStyle *style = [[YIMEditerTextStyle alloc]init];
@@ -20,8 +86,6 @@
     style.textColor = [self styleAllColor].firstObject;
     return style;
 }
-
-
 +(NSArray<NSString*>*)styleAllFontName{
     return [[YIMEditerFontFamilyManager defualtManager]allRegistFontName];
 }

@@ -8,6 +8,7 @@
 
 #import "YIMEditerStyleBaseCell.h"
 
+/**加粗、斜体、下划线cell*/
 @interface YIMEditerTextStyleCell : YIMEditerStyleBaseCell
 
 @property(nonatomic,assign)BOOL isBold;

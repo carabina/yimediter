@@ -7,22 +7,14 @@
 //
 
 #import "YIMEditerView.h"
+#import "YIMEditerProtocol.h"
 #import "YIMEditerTextStyle.h"
-
-@class YIMEditerFontView;
-
-@protocol YIMEditerFontViewDelegate <NSObject>
-@required
-/**当字体样式改变时*/
--(void)fontView:(YIMEditerFontView*)fontView styleDidChange:(YIMEditerTextStyle*)style;
-@end
 
 /**
  字体样式选择视图
  */
-@interface YIMEditerFontView : YIMEditerView
+@interface YIMEditerFontView : YIMEditerView <YIMEditerStyleChangeObject>
 
-@property(nonatomic,weak)id<YIMEditerFontViewDelegate> delegate;
 @property(nonatomic,strong)YIMEditerTextStyle *textStyle;
 
 @end

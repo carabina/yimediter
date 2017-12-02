@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YIMEditerProtocol.h"
+
 
 @interface YIMEditerAccessoryMenuItem : NSObject
 @property(nonatomic,strong)UIImage *image;
 -(instancetype)initWithImage:(UIImage*)image;
+
+/**默认返回nil，子类继承返回的view将在点击时切换至textView的inputView*/
+-(UIView*)menuItemInputView;
+/**用户点击该菜单时*/
+-(void)clickAction;
 @end

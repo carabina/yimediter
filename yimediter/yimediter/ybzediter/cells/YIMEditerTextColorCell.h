@@ -8,6 +8,7 @@
 
 #import "YIMEditerStyleBaseCell.h"
 
+/**字体颜色cell*/
 @interface YIMEditerTextColorCell : YIMEditerStyleBaseCell
 
 @property(nonatomic,strong)UIColor *color;

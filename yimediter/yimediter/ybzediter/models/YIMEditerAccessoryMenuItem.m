@@ -16,4 +16,10 @@
     }
     return self;
 }
+-(UIView*)menuItemInputView{
+    return nil;
+}
+-(void)clickAction{
+    
+}
 @end

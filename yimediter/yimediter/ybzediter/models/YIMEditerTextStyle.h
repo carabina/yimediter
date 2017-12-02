@@ -6,10 +6,14 @@
 //  Copyright © 2017年 ybz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "YIMEditerStyle.h"
 #import <UIKit/UIKit.h>
 
-@interface YIMEditerTextStyle : NSObject <NSCopying>
+
+/**
+ 文字样式
+ */
+@interface YIMEditerTextStyle : YIMEditerStyle <NSCopying>
 
 /**是否粗体*/
 @property(nonatomic,assign)BOOL bold;
