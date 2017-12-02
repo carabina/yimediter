@@ -17,6 +17,7 @@
  */
 @interface YIMEditerTextView : UITextView
 
+/**菜单栏*/
 @property(nonatomic,strong)NSArray<YIMEditerAccessoryMenuItem*>* menus;
 /**不要直接使用该textView的delegate，请使用userDelegate*/
 @property(nonatomic,strong)id<UITextViewDelegate> userDelegates;

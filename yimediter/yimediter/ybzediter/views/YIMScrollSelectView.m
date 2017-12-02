@@ -167,7 +167,7 @@
     
     //布局所有item，x坐标不是从0开始，而是从第一个元素的中心点开始
     for (NSInteger index = 0,xPoint = -itemSize.width/2; index < _itemViews.count; index++,xPoint += itemSize.width) {
-        _itemViews[index].frame = CGRectMake(xPoint, yPoint, itemSize.width, itemSize.height);
+        _itemViews[index].frame = CGRectMake(trunc(xPoint * 2) / 2, trunc(yPoint * 2) / 2, itemSize.width, itemSize.height);
     }
     self.maskLayer.frame = self.bounds;
     self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX(self.itemViews.lastObject.frame) - itemSize.width/2, CGRectGetHeight(self.frame));
@@ -185,6 +185,10 @@
     NSInteger count = [self.dataSource numberOfItems:self];
     [self.itemViews removeAllObjects];
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    if (count <= 0) {
+        self.scrollView.contentSize = CGSizeZero;
+        return;
+    }
     for (NSInteger i = 0; i < count; i++) {
         YIMScrollSelectItemView *itemView;
         if (i == self.currentIndex) {
@@ -230,6 +234,16 @@
     return itemSize;
 }
 #pragma -mark delegates
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if ([self.delegate respondsToSelector:@selector(YIMScrollSelectView:didScrollSelected:)]) {
+        CGFloat xPoint = scrollView.contentOffset.x + scrollView.contentInset.left;
+        CGFloat itemWidth = self.itemViews.firstObject.frame.size.width;
+        NSInteger index =MIN(self.itemViews.count-1, MAX(0,(xPoint-self.itemViews.firstObject.frame.origin.x)/itemWidth));
+        if([self.delegate YIMScrollSelectView:self didScrollSelected:index]){
+            self.currentIndex = index;
+        }
+    }
+}
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         [self scrollViewEnd];

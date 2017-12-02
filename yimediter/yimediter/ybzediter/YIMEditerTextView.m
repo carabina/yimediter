@@ -22,8 +22,9 @@
 @interface YIMEditerTextView()<YIMEditerInputAccessoryViewDelegate,UITextViewDelegate,YIMEditerStyleChangeDelegate>{
     
 }
-
+/**所有样式对象*/
 @property(nonatomic,strong)NSMutableArray<id<YIMEditerStyleChangeObject>> *allObjects;
+/**默认的绘制属性，emmmmmmm....没啥用的时候就用它就是了*/
 @property(nonatomic,strong)YIMEditerDrawAttributes *defualtDrawAttributed;
 
 @end
@@ -69,6 +70,12 @@
             [self becomeFirstResponder];
     }
 }
+-(void)setDelegate:(id<UITextViewDelegate>)delegate{
+    if (delegate != self) {
+        return;
+    }
+    [super setDelegate:delegate];
+}
 
 
 #pragma -mark get set
@@ -81,7 +88,9 @@
 }
 
 #pragma -mark public method
+//添加一个Object时
 -(void)addStyleChangeObject:(id<YIMEditerStyleChangeObject>)styleChangeObj{
+    //设置样式变更的代理
     styleChangeObj.styleDelegate = self;
     [self.defualtDrawAttributed updateAttributed:[styleChangeObj.defualtStyle outPutAttributed]];
     [self.allObjects addObject:styleChangeObj];
@@ -94,7 +103,7 @@
     for (; minRangIndex > 0 && [self.text characterAtIndex:minRangIndex - 1] != '\n'; minRangIndex--)
         ;
     NSInteger maxRangeIndex = range.location + range.length;
-    for (; maxRangeIndex < self.text.length && [self.text characterAtIndex:maxRangeIndex - 1] != '\n'; maxRangeIndex++)
+    for (; maxRangeIndex < self.text.length && [self.text characterAtIndex:MIN(maxRangeIndex - 1,0)] != '\n'; maxRangeIndex++)
         ;
     return NSMakeRange(minRangIndex, maxRangeIndex - minRangIndex);
 }
@@ -119,14 +128,18 @@
 /**从指定区间提取绘制属性*/
 -(YIMEditerDrawAttributes*)attributedFromRange:(NSRange)range{
     YIMEditerMutableDrawAttributes *attributes = [[YIMEditerMutableDrawAttributes alloc]init];
+    //获取选中文字的属性
     NSDictionary *textAttributed = [self.textStorage attributesAtIndex:range.location longestEffectiveRange:NULL inRange:range];
     attributes.textAttributed = textAttributed;
     
+    //获取选中段落
     NSRange paragraphRange = [self paragraphRangeWithSelectRange:range];
+    //获取选中段落的属性
     NSDictionary *paragraphAttributed = [self.textStorage attributesAtIndex:paragraphRange.location longestEffectiveRange:NULL inRange:paragraphRange];
     attributes.paragraphAttributed = paragraphAttributed;
     return attributes;
 }
+/**创建一个默认属性*/
 -(YIMEditerDrawAttributes*)createDefualtDrawAttributes{
     YIMEditerDrawAttributes *attr = [[YIMEditerDrawAttributes alloc]init];
     for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
@@ -134,6 +147,7 @@
     }
     return attr;
 }
+/**获取当前属性，allObject的属性拼在一块儿得出的文字属性*/
 -(YIMEditerDrawAttributes*)currentAttributes{
     YIMEditerDrawAttributes *attr = [[YIMEditerDrawAttributes alloc]init];
     for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
@@ -145,15 +159,22 @@
 #pragma -mark delegate functions
 /**样式切换时*/
 -(void)style:(id)sender didChange:(YIMEditerStyle *)newStyle{
+    //获取当前文字属性
     YIMEditerDrawAttributes *currentAttributes = [self currentAttributes];
+    //更新变更的属性
     [currentAttributes updateAttributed:[newStyle outPutAttributed]];
+    //修改选中文字属性
     [self setTextWithAttributed:currentAttributes range:self.selectedRange];
-    self.typingAttributes = currentAttributes.textAttributed;
+    //修改下一个字符属性
+    [self setTypingWithAttributed:currentAttributes];
 }
 /**AccessoryView选择时*/
 -(void)YIMEditerInputAccessoryView:(YIMEditerInputAccessoryView*)accessoryView clickItemAtIndex:(NSInteger)index{
+    //执行菜单item对象的点击方法
     [self.menus[index] clickAction];
+    //把inputView设置为菜单item对象返回的inputView
     self.inputView = [self.menus[index] menuItemInputView];
+    //刷新inputView
     [self reloadInputViews];
 }
 
@@ -189,10 +210,14 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     NSLog(@"shouldChangeTextInRange");
+    YIMEditerDrawAttributes *attributes = [[YIMEditerDrawAttributes alloc]init];
+    //获取所有Object上的当前样式
     for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
-        [self.defualtDrawAttributed updateAttributed:[obj.currentStyle outPutAttributed]];
+        [attributes updateAttributed:[obj.currentStyle outPutAttributed]];
     }
-    self.typingAttributes = self.defualtDrawAttributed.textAttributed;
+    //把样式更新到下一个字符属性
+    [self setTypingWithAttributed:attributes];
+    self.defualtDrawAttributed = attributes;
     
     if ([self.userDelegates respondsToSelector:@selector(textView:shouldChangeTextInRange:replacementText:)]) {
         return [self.userDelegates textView:textView shouldChangeTextInRange:range replacementText:text];
@@ -220,23 +245,27 @@
             //通常取光标前一个字符的属性为当前样式
             //但是如果前一个字符是换行符时，需要取换行符后面的字符样式为当前样式。因为换行符的属性属于上一个段落的，而当前光标位置并不希望得到上一个段落的样式
             if ([self.text characterAtIndex:(self.selectedRange.location + self.selectedRange.length - 1)] == '\n') {
-                //如果光标后面还有字符
+                //如果光标后面还有字符，取后一个字符，否则使用默认样式
                 if (self.text.length > self.selectedRange.location + self.selectedRange.length) {
                     attributes = [self attributedFromRange:NSMakeRange(self.selectedRange.location, 1)];
                 }else{
                     attributes = [self defualtDrawAttributed];
                 }
             }else{
+                //使用光标前一个字符的属性
                 attributes = [self attributedFromRange:NSMakeRange(self.selectedRange.location - 1, 1)];
             }
         }else{
             attributes = [[YIMEditerDrawAttributes alloc]init];
         }
     }
+    //通知所有object更新UI
     for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
         [obj updateUIWithTextAttributes:attributes];
     }
+    //更新默认文字属性
     self.defualtDrawAttributed = attributes;
+    //设置下一个字符的属性
     [self setTypingWithAttributed:attributes];
     if ([self.userDelegates respondsToSelector:@selector(textViewDidChangeSelection:)]) {
         [self.userDelegates textViewDidChangeSelection:textView];

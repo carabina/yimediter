@@ -17,6 +17,7 @@
 @implementation YIMEditerParagraphLineIndentCell
 
 -(void)setup{
+    [super setup];
     UIButton *leftTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftTabButton addTarget:self action:@selector(clickLeft:) forControlEvents:UIControlEventTouchUpInside];
     [leftTabButton setImage:[UIImage imageNamed:@"left_tab"] forState:UIControlStateNormal];

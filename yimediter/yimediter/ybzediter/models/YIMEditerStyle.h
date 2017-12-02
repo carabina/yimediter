@@ -11,7 +11,7 @@
 @class YIMEditerDrawAttributes;
 
 /**表示样式基类*/
-@interface YIMEditerStyle : NSObject
+@interface YIMEditerStyle : NSObject <NSCopying>
 
 /**是否段落样式*/
 @property(nonatomic,assign,readonly)BOOL isParagraphStyle;

@@ -7,6 +7,7 @@
 //
 
 #import "YIMEditerStyleBaseCell.h"
+#import "YIMEditerSetting.h"
 
 @implementation YIMEditerStyleBaseCell
 
@@ -23,6 +24,7 @@
 
 -(void)setup{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.setting = [YIMEditerSetting appearance];
     [self bottomLineView];
 }
 

@@ -9,12 +9,14 @@
 #import "YIMEditerParagraphView.h"
 #import "YIMEditerParagraphAlignmentCell.h"
 #import "YIMEditerParagraphLineIndentCell.h"
+#import "YIMEditerParagraphSpacingCell.h"
 
 @interface YIMEditerParagraphView()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,weak)id<YIMEditerStyleChangeDelegate> delegate;
 @property(nonatomic,strong)YIMEditerParagraphAlignmentCell *alignmentCell;
 @property(nonatomic,strong)YIMEditerParagraphLineIndentCell *lineIndentCell;
+@property(nonatomic,strong)YIMEditerParagraphSpacingCell *spacingCell;
 @end
 
 @implementation YIMEditerParagraphView
@@ -29,6 +31,7 @@
         tableView.frame = self.bounds;
         [tableView registerClass:[YIMEditerParagraphAlignmentCell class] forCellReuseIdentifier:@"alignmentCell"];
         [tableView registerClass:[YIMEditerParagraphLineIndentCell class] forCellReuseIdentifier:@"lineIndentCell"];
+        [tableView registerClass:[YIMEditerParagraphSpacingCell class] forCellReuseIdentifier:@"spacingCell"];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:tableView];
         
@@ -42,7 +45,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -52,6 +55,9 @@
         if (indexPath.row == 1) {
             return self.alignmentCell;
         }
+        if (indexPath.row == 2) {
+            return self.spacingCell;
+        }
     }
     return [UITableViewCell new];
 }
@@ -59,6 +65,9 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 1) {
             return 54;
+        }
+        if (indexPath.row == 2) {
+            return 69;
         }
     }
     return 44;
@@ -69,6 +78,7 @@
     _paragraphStyle = paragraphStyle;
     self.alignmentCell.currentTextAlignment = paragraphStyle.alignment;
     self.lineIndentCell.isRightTab = paragraphStyle.firstLineIndent;
+    self.spacingCell.spacingHeight = paragraphStyle.lineSpacing;
 }
 -(YIMEditerParagraphAlignmentCell*)alignmentCell{
     if (!_alignmentCell) {
@@ -90,18 +100,34 @@
     }
     return _lineIndentCell;
 }
+-(YIMEditerParagraphSpacingCell *)spacingCell{
+    if (!_spacingCell) {
+        _spacingCell = [self.tableView dequeueReusableCellWithIdentifier:@"spacingCell"];
+        __weak typeof(self) weakSelf = self;
+        [_spacingCell setSpacingChange:^(CGFloat height) {
+            [weakSelf lineSpacingChange:height];
+        }];
+    }
+    return _spacingCell;
+}
 
 -(void)firstLineIndentChange:(BOOL)newValue{
     if (self.paragraphStyle.firstLineIndent != newValue) {
         self.paragraphStyle.firstLineIndent = newValue;
+        [self valueChange];
     }
-    [self valueChange];
 }
 -(void)alignmentChange:(NSTextAlignment)newValue{
     if (self.paragraphStyle.alignment != newValue) {
         self.paragraphStyle.alignment = newValue;
+        [self valueChange];
     }
-    [self valueChange];
+}
+-(void)lineSpacingChange:(CGFloat)newValue{
+    if (self.paragraphStyle.lineSpacing != newValue) {
+        self.paragraphStyle.lineSpacing = newValue;
+        [self valueChange];
+    }
 }
 -(void)valueChange{
     if ([self.delegate respondsToSelector:@selector(style:didChange:)]) {

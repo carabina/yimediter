@@ -27,7 +27,13 @@
 
 @protocol YIMScrollSelectViewDelegate <NSObject>
 @optional
+/** 选中时执行 */
 -(void)YIMScrollSelectView:(YIMScrollSelectView*)selectView didSelectedIndex:(NSInteger)index;
+/**
+ 滚动时执行
+ 返回值决定是否要在滚动时切换选中index
+ */
+-(BOOL)YIMScrollSelectView:(YIMScrollSelectView*)selectView didScrollSelected:(NSInteger)index;
 /**
  动画切换选择View
  在此方法内执行支持动画的属性修改将以动画展示

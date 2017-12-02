@@ -30,6 +30,7 @@
         s.firstLineHeadIndent = 0;
     s.alignment = self.alignment;
     s.lineSpacing = self.lineSpacing;
+    s.paragraphSpacing = self.lineSpacing;
     YIMEditerMutableDrawAttributes *drawAttributed = [[YIMEditerMutableDrawAttributes alloc]init];
     drawAttributed.textAttributed = @{NSParagraphStyleAttributeName:s};
     drawAttributed.paragraphAttributed = @{NSParagraphStyleAttributeName:s};
@@ -40,12 +41,24 @@
     YIMEditerParagraphStyle *style = [[YIMEditerParagraphStyle alloc]init];
     style.firstLineIndent = false;
     style.alignment = NSTextAlignmentNatural;
-    style.lineSpacing = 10;
+    style.lineSpacing = 7;
     return style;
 }
 
 -(BOOL)isParagraphStyle{
     return true;
 }
+
+-(instancetype)copy{
+    YIMEditerParagraphStyle *paragraphStyle = [[YIMEditerParagraphStyle alloc]init];
+    paragraphStyle.lineSpacing = self.lineSpacing;
+    paragraphStyle.firstLineIndent = self.firstLineIndent;
+    paragraphStyle.alignment = self.alignment;
+    return paragraphStyle;
+}
+-(instancetype)copyWithZone:(NSZone *)zone{
+    return [self copy];
+}
+
 
 @end

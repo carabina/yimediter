@@ -21,6 +21,7 @@
 		5C8A3A9F1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A9E1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf */; };
 		5CB23B621FD163EE000F2F57 /* DefualtParagraphItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */; };
 		5CB23B651FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */; };
+		5CB23B681FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */; };
 		5CBD354D1FCE53BC00107D69 /* 杨任东竹石体-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CBD354B1FCE53BB00107D69 /* 杨任东竹石体-Bold.ttf */; };
 		5CBD354E1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CBD354C1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf */; };
 		5CBEA0611FBEBB4700D29998 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEA0601FBEBB4700D29998 /* AppDelegate.m */; };
@@ -72,6 +73,8 @@
 		5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefualtParagraphItem.m; sourceTree = "<group>"; };
 		5CB23B631FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphLineIndentCell.h; sourceTree = "<group>"; };
 		5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerParagraphLineIndentCell.m; sourceTree = "<group>"; };
+		5CB23B661FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphSpacingCell.h; sourceTree = "<group>"; };
+		5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerParagraphSpacingCell.m; sourceTree = "<group>"; };
 		5CBD354B1FCE53BB00107D69 /* 杨任东竹石体-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "杨任东竹石体-Bold.ttf"; sourceTree = "<group>"; };
 		5CBD354C1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "杨任东竹石体-Regular.ttf"; sourceTree = "<group>"; };
 		5CBEA05C1FBEBB4700D29998 /* yimediter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yimediter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +259,8 @@
 				5C7615251FD003DD0032C516 /* YIMEditerParagraphAlignmentCell.m */,
 				5CB23B631FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.h */,
 				5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */,
+				5CB23B661FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.h */,
+				5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CED35D11FC3FF3D002FAAAE /* YIMEditerFontView.m in Sources */,
+				5CB23B681FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m in Sources */,
 				5CBEA0641FBEBB4700D29998 /* ViewController.m in Sources */,
 				5CBEA06F1FBEBB4700D29998 /* main.m in Sources */,
 				5C09B6131FC65F6F0069C40A /* YIMEditerTextColorCell.m in Sources */,
@@ -535,7 +541,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2Q5KU2HBEN;
 				INFOPLIST_FILE = yimediter/Info.plist;
@@ -550,7 +555,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2Q5KU2HBEN;
 				INFOPLIST_FILE = yimediter/Info.plist;
