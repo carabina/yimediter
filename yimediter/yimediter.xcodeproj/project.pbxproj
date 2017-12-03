@@ -146,6 +146,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C2F6B1A1FD4516500715E94 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
 		5CBEA0531FBEBB4700D29998 = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +194,7 @@
 			children = (
 				5CC628071FC962B40094D972 /* YIMEditerTextView.h */,
 				5CC628061FC962B40094D972 /* YIMEditerTextView.m */,
+				5C2F6B1A1FD4516500715E94 /* resource */,
 				5CF749131FD139F4000061A7 /* items */,
 				5CC6281A1FC9C9120094D972 /* fonts */,
 				5CED35E91FC43619002FAAAE /* extends */,
