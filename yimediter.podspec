@@ -8,6 +8,6 @@ s.authors      = {'ybz' => 'ybz975218925@live.com'}
 s.platform     = :ios, '8.0'
 s.source       = {:git => 'git@github.com:yiiim/yimediter.git', :tag => s.version}
 s.source_files = 'yimediter/**/*.{h,m}','yimediter/*.{h,m}'
-s.resource     = 'yimediter/resource/*.*'
+s.resource     = 'yimediter/resource/*.boundle'
 s.requires_arc = true
 end

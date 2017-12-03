@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5C09B6131FC65F6F0069C40A /* YIMEditerTextColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C09B6121FC65F6F0069C40A /* YIMEditerTextColorCell.m */; };
-		5C2F6B101FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F6B0F1FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.m */; };
 		5C2F6B131FD4245400715E94 /* UIColor+YIMEditerExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F6B121FD4245400715E94 /* UIColor+YIMEditerExtend.m */; };
 		5C2F6B191FD42C4000715E94 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F6B181FD42C4000715E94 /* WebViewController.m */; };
+		5C2F6B1C1FD453AA00715E94 /* yimediter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F6B1B1FD453AA00715E94 /* yimediter.bundle */; };
 		5C63187A1FCA93DE000A1F92 /* YIMEditerFontFamilyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6318791FCA93DE000A1F92 /* YIMEditerFontFamilyManager.m */; };
 		5C7615201FCFFE5E0032C516 /* YIMEditerParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C76151F1FCFFE5E0032C516 /* YIMEditerParagraphStyle.m */; };
 		5C7615231FD001820032C516 /* YIMEditerParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615221FD001820032C516 /* YIMEditerParagraphView.m */; };
@@ -55,12 +55,11 @@
 /* Begin PBXFileReference section */
 		5C09B6111FC65F6F0069C40A /* YIMEditerTextColorCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerTextColorCell.h; sourceTree = "<group>"; };
 		5C09B6121FC65F6F0069C40A /* YIMEditerTextColorCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerTextColorCell.m; sourceTree = "<group>"; };
-		5C2F6B0E1FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+YIMEditerExtend.h"; sourceTree = "<group>"; };
-		5C2F6B0F1FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+YIMEditerExtend.m"; sourceTree = "<group>"; };
 		5C2F6B111FD4245400715E94 /* UIColor+YIMEditerExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+YIMEditerExtend.h"; sourceTree = "<group>"; };
 		5C2F6B121FD4245400715E94 /* UIColor+YIMEditerExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+YIMEditerExtend.m"; sourceTree = "<group>"; };
 		5C2F6B171FD42C4000715E94 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		5C2F6B181FD42C4000715E94 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		5C2F6B1B1FD453AA00715E94 /* yimediter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = yimediter.bundle; sourceTree = "<group>"; };
 		5C6318781FCA93DE000A1F92 /* YIMEditerFontFamilyManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerFontFamilyManager.h; sourceTree = "<group>"; };
 		5C6318791FCA93DE000A1F92 /* YIMEditerFontFamilyManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerFontFamilyManager.m; sourceTree = "<group>"; };
 		5C76151E1FCFFE5E0032C516 /* YIMEditerParagraphStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphStyle.h; sourceTree = "<group>"; };
@@ -149,6 +148,7 @@
 		5C2F6B1A1FD4516500715E94 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				5C2F6B1B1FD453AA00715E94 /* yimediter.bundle */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -289,8 +289,6 @@
 			children = (
 				5CED35ED1FC436AA002FAAAE /* UIImage+YIMEditerImageExtend.h */,
 				5CED35EE1FC436AA002FAAAE /* UIImage+YIMEditerImageExtend.m */,
-				5C2F6B0E1FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.h */,
-				5C2F6B0F1FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.m */,
 				5C2F6B111FD4245400715E94 /* UIColor+YIMEditerExtend.h */,
 				5C2F6B121FD4245400715E94 /* UIColor+YIMEditerExtend.m */,
 			);
@@ -367,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C2F6B1C1FD453AA00715E94 /* yimediter.bundle in Resources */,
 				5CBEA06C1FBEBB4700D29998 /* LaunchScreen.storyboard in Resources */,
 				5C8A3A9A1FCEC4000045D37E /* 山文丰手写体.ttf in Resources */,
 				5C8A3A951FCEC18A0045D37E /* 行楷-Regular.ttc in Resources */,
@@ -418,7 +417,6 @@
 				5CF749161FD13AAB000061A7 /* DefualtFontItem.m in Sources */,
 				5CED35F81FC48786002FAAAE /* YIMEditerTextFontSizeCell.m in Sources */,
 				5C7615201FCFFE5E0032C516 /* YIMEditerParagraphStyle.m in Sources */,
-				5C2F6B101FD4126C00715E94 /* NSAttributedString+YIMEditerExtend.m in Sources */,
 				5CB23B651FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
