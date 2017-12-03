@@ -9,6 +9,13 @@
 #import "YIMEditerParagraphStyle.h"
 #import "YIMEditerDrawAttributes.h"
 
+@interface YIMEditerParagraphStyle()
+/**
+ emmmmm.....这里获取一个字体大小用于设置css的line-height，css不支持直接设置行间距，要设置行高
+ */
+@property(nonatomic,assign)CGFloat fontSize;
+@end
+
 @implementation YIMEditerParagraphStyle
 
 -(instancetype)initWithAttributed:(YIMEditerMutableDrawAttributes *)drawAttributed{
@@ -19,6 +26,10 @@
         self.firstLineIndent = s.firstLineHeadIndent > 0;
         self.alignment = s.alignment;
         self.lineSpacing = s.lineSpacing;
+    }
+    if ([attributed.allKeys containsObject:NSFontAttributeName]) {
+        UIFont *font = [attributed objectForKey:NSFontAttributeName];
+        self.fontSize = font.pointSize;
     }
     return self;
 }
@@ -58,6 +69,28 @@
 }
 -(instancetype)copyWithZone:(NSZone *)zone{
     return [self copy];
+}
+
+-(NSString*)htmlStyle{
+    NSMutableString* style = [NSMutableString string];
+    if (self.firstLineIndent) {
+        [style appendString:@"text-indent: 14px;"];
+    }
+    [style appendFormat:@"line-height: %.1fpx;",self.lineSpacing + self.fontSize];
+    
+    NSString* textAlign = @"left";
+    switch (self.alignment) {
+        case NSTextAlignmentCenter:
+            textAlign = @"center";
+            break;
+        case NSTextAlignmentRight:
+            textAlign = @"right";
+            break;
+        default:
+            break;
+    }
+    [style appendFormat:@"text-align:%@;",textAlign];
+    return style;
 }
 
 

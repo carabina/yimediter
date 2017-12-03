@@ -12,4 +12,5 @@
 @interface DefualtFontItem : YIMEditerAccessoryMenuItem
 
 @property(nonatomic,strong)YIMEditerFontView* fontView;
+
 @end

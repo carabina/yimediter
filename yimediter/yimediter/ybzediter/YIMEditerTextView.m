@@ -11,11 +11,7 @@
 
 #import "YIMEditerTextView.h"
 #import "YIMEditerInputAccessoryView.h"
-#import "YIMEditerSetting.h"
-#import "YIMEditerFontView.h"
-#import "YIMEditerParagraphView.h"
-#import "YIMEditerFontFamilyManager.h"
-#import "YIMEditerDrawAttributes.h"
+#import "NSAttributedString+YIMEditerExtend.h"
 
 
 
@@ -56,6 +52,15 @@
     accessoryView.delegate = self;
     accessoryView.frame = CGRectMake(0, 0, self.frame.size.width, 38);
     self.inputAccessoryView = accessoryView;
+    
+    //添加默认字体编辑项
+    DefualtFontItem *item = [[DefualtFontItem alloc]init];
+    //添加默认段落编辑项
+    DefualtParagraphItem *item1 = [[DefualtParagraphItem alloc]init];
+    
+    self.menus = @[item,item1];
+    [self addStyleChangeObject:item.fontView];
+    [self addStyleChangeObject:item1.paragraphView];
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -94,6 +99,53 @@
     styleChangeObj.styleDelegate = self;
     [self.defualtDrawAttributed updateAttributed:[styleChangeObj.defualtStyle outPutAttributed]];
     [self.allObjects addObject:styleChangeObj];
+}
+-(NSString*)outPutHtmlString{
+    NSMutableString* htmlString = [NSMutableString string];
+    
+    BOOL isNewParagraph = true;
+    NSRange effectiveRange = NSMakeRange(0, 0);
+    while (effectiveRange.location + effectiveRange.length < self.text.length) {
+        NSDictionary *attributes = [self.attributedText attributesAtIndex:effectiveRange.location+effectiveRange.length effectiveRange:&effectiveRange];
+        YIMEditerDrawAttributes *drawAttributes = [[YIMEditerDrawAttributes alloc]initWithAttributeString:attributes];
+        
+        NSMutableString *htmlStyleString = [NSMutableString string];
+        NSMutableArray<NSString*>* htmlAttributes = [NSMutableArray array];
+        NSMutableString *paragraphHtmlStyleString = [NSMutableString string];
+        NSMutableArray<NSString*>* paragraphHtmlAttributes = [NSMutableArray array];
+        for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+            YIMEditerStyle *style = [obj styleUseAttributed:drawAttributes];
+            if(style.isParagraphStyle){
+                [paragraphHtmlStyleString appendString:[style htmlStyle]];
+                [paragraphHtmlAttributes addObjectsFromArray:[style htmlAttributed]];
+            }else{
+                [htmlStyleString appendString:[style htmlStyle]];
+                [htmlAttributes addObjectsFromArray:[style htmlAttributed]];
+            }
+        }
+        if (isNewParagraph) {
+            [htmlString appendFormat:@"<p style=\"%@\">",paragraphHtmlStyleString];
+            for (NSString* htmlAttr in paragraphHtmlAttributes) {
+                [htmlString appendFormat:@"<%@>",htmlAttr];
+            }
+            isNewParagraph = false;
+        }
+        [htmlString appendFormat:@"<font style=\"%@\">",htmlStyleString];
+        for (NSString* htmlAttr in htmlAttributes) {
+            [htmlString appendFormat:@"<%@>",htmlAttr];
+        }
+        [htmlString appendString:[self.text substringWithRange:effectiveRange]];
+        for (NSString* htmlAttr in [htmlAttributes reverseObjectEnumerator]) {
+            [htmlString appendFormat:@"</%@>",htmlAttr];
+        }
+        [htmlString appendString:@"</font>"];
+        if ([[self.text substringWithRange:NSMakeRange(effectiveRange.location + effectiveRange.length - 1, 1)] isEqualToString:@"\n"]) {
+            [htmlString appendString:@"</p>"];
+            isNewParagraph = true;
+        }
+    }
+    [htmlString appendString:@"</p>"];
+    return htmlString;
 }
 
 #pragma -mark private method

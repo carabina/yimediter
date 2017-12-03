@@ -35,5 +35,8 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[moreImageView]-16-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.contentView,moreImageView)]];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
 }
+-(CGFloat)needHeight{
+    return 39;
+}
 
 @end

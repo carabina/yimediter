@@ -12,6 +12,7 @@
 @class YIMEditerStyle;
 @class YIMEditerDrawAttributes;
 
+/**文字样式变更代理*/
 @protocol YIMEditerStyleChangeDelegate <NSObject>
 -(void)style:(id)sender didChange:(YIMEditerStyle*)newStyle;
 @end
@@ -28,7 +29,9 @@
 /**提供一个默认样式*/
 @property(nonatomic,strong,readonly)YIMEditerStyle *defualtStyle;
 /** 对象当前的样式 */
--(YIMEditerStyle*)currentStyle;
+@property(nonatomic,strong,readonly)YIMEditerStyle *currentStyle;
+/**根据文字属性返回一个该Object的style*/
+-(YIMEditerStyle*)styleUseAttributed:(YIMEditerDrawAttributes*)attributed;
 /** 使用Attributes更新样式，需要在此处更新UI以适应新的样式**/
 -(void)updateUIWithTextAttributes:(YIMEditerDrawAttributes*)attributed;
 

@@ -27,6 +27,8 @@
 @property(nonatomic,strong)YIMEditerTextColorCell *textColorCell;
 /**字体名cell*/
 @property(nonatomic,strong)YIMEditerTextFontFamilyCell *textFontFamilyCell;
+/**所有cell*/
+@property(nonatomic,strong)NSArray<YIMEditerStyleBaseCell*>* cellList;
 @end
 
 @implementation YIMEditerFontView
@@ -49,6 +51,8 @@
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:tableView];
         
+        self.cellList = @[self.textStyleCell,self.textFontCell,self.textColorCell,self.textFontFamilyCell];
+        
         self.tableView = tableView;
     }
     return self;
@@ -59,45 +63,18 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return self.cellList.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        if (indexPath.row == 1) {
-            return 64;
-        }
-        if (indexPath.row == 2) {
-            return 70;
-        }
-        if (indexPath.row == 3) {
-            return 39;
-        }
-    }
-    return 54;
+    return [self.cellList[indexPath.row] needHeight];
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return self.textStyleCell;
-        }
-        if (indexPath.row == 1) {
-            return self.textFontCell;
-        }
-        if (indexPath.row == 2) {
-            return self.textColorCell;
-        }
-        if (indexPath.row == 3) {
-            return self.textFontFamilyCell;
-        }
-    }
-    return [UITableViewCell new];
+    return self.cellList[indexPath.row];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    if (indexPath.section == 0) {
-        if (indexPath.row == 3) {
-            [self showSelectFontViewController];
-        }
+    if (self.cellList[indexPath.row] == self.textFontFamilyCell) {
+        [self showSelectFontViewController];
     }
 }
 
@@ -113,7 +90,7 @@
 }
 -(YIMEditerTextStyleCell*)textStyleCell{
     if (!_textStyleCell) {
-        _textStyleCell = [self.tableView dequeueReusableCellWithIdentifier:@"textStyleCell"];
+        _textStyleCell = [[YIMEditerTextStyleCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         //点击是否加粗
         [_textStyleCell setBoldChangeBlock:^(BOOL isSelected) {
@@ -132,7 +109,7 @@
 }
 -(YIMEditerTextFontSizeCell*)textFontCell{
     if (!_textFontCell) {
-        _textFontCell = [self.tableView dequeueReusableCellWithIdentifier:@"textFontSizeCell"];
+        _textFontCell = [[YIMEditerTextFontSizeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         //选择字体大小
         [_textFontCell setFontSizeChangeBlock:^(NSInteger fontSize) {
@@ -143,7 +120,7 @@
 }
 -(YIMEditerTextColorCell*)textColorCell{
     if (!_textColorCell) {
-        _textColorCell = [self.tableView dequeueReusableCellWithIdentifier:@"textColorCell"];
+        _textColorCell = [[YIMEditerTextColorCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         //选择字体颜色
         [_textColorCell setColorChangeBlock:^(UIColor *color) {
@@ -154,7 +131,7 @@
 }
 -(YIMEditerTextFontFamilyCell*)textFontFamilyCell{
     if (!_textFontFamilyCell) {
-        _textFontFamilyCell = [self.tableView dequeueReusableCellWithIdentifier:@"textFontFamilyCell"];
+        _textFontFamilyCell = [[YIMEditerTextFontFamilyCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     }
     return _textFontFamilyCell;
 }
@@ -241,18 +218,26 @@
     }
 }
 
+#pragma -mark 实现YIMEditerStyleChangeObject接口
+/**当前样式*/
 -(YIMEditerStyle*)currentStyle{
     return self.textStyle;
 }
+/**更新UI*/
 -(void)updateUIWithTextAttributes:(YIMEditerDrawAttributes *)attributed{
     self.textStyle = [[YIMEditerTextStyle alloc]initWithAttributed:attributed];
 }
+-(YIMEditerStyle*)styleUseAttributed:(YIMEditerDrawAttributes *)attributed{
+    return [[YIMEditerTextStyle alloc]initWithAttributed:attributed];
+}
+/**样式变更代理*/
 -(id<YIMEditerStyleChangeDelegate>)styleDelegate{
     return self.delegate;
 }
 -(void)setStyleDelegate:(id<YIMEditerStyleChangeDelegate>)styleDelegate{
     self.delegate = styleDelegate;
 }
+/**默认样式*/
 -(YIMEditerStyle*)defualtStyle{
     return [YIMEditerTextStyle createDefualtStyle];
 }

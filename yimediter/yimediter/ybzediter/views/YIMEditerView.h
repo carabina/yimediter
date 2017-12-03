@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YIMEditerSetting.h"
 
 
 /**
- 用与替代键盘，出现的用户操作界面视图基类
+ 
  */
 @interface YIMEditerView : UIView
+
+@property(nonatomic,strong)YIMEditerSetting *setting;
 
 @end

@@ -21,5 +21,7 @@
  */
 -(void)setup;
 
+/**cell 需要的高度*/
+-(CGFloat)needHeight;
 
 @end

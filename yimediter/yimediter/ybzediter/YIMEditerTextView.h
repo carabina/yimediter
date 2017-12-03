@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YIMEditerProtocol.h"
 
-@class YIMEditerAccessoryMenuItem;
+#import "YIMEditerAccessoryMenuItem.h"
+#import "YIMEditerFontFamilyManager.h"
+#import "YIMEditerDrawAttributes.h"
+#import "YIMEditerParagraphView.h"
+#import "YIMEditerProtocol.h"
+#import "YIMEditerFontView.h"
+#import "YIMEditerSetting.h"
+#import "DefualtFontItem.h"
+#import "DefualtParagraphItem.h"
+
+
 
 
 /**
@@ -26,11 +35,12 @@
 
 
 
-
 /**
  添加一个样式对象
  
  */
 -(void)addStyleChangeObject:(id<YIMEditerStyleChangeObject>)styleChangeObj;
+
+-(NSString*)outPutHtmlString;
 
 @end

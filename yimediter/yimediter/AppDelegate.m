@@ -20,7 +20,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSTextEffectAttributeName:@"1"}];
+    [attributedString appendAttributedString:[[NSAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSTextEffectAttributeName:@"1"}]];
+    [attributedString appendAttributedString:[[NSAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor],NSTextEffectAttributeName:@"1"}]];
+    [attributedString addAttributes:@{NSTextEffectAttributeName:@"2"} range:NSMakeRange(0, attributedString.length)];
+    
+    NSRange range = NSMakeRange(0, 0);
+    NSDictionary *dict = [attributedString attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, 2)];
+    
+    NSLog(@"%@",dict);
+    
+    
+    
+    
     YIMEditerFontFamilyManager *manager = [YIMEditerFontFamilyManager defualtManager];
+    //注册字体
     [manager regiestFont:@"PingFang SC"];
     [manager regiestFont:@"Heiti SC"];
     [manager regiestFont:@"Kaiti"];
@@ -29,16 +43,9 @@
     [manager regiestFont:@"ShanWenFeng"];
     [manager regiestFont:@"®ÀÖ"];
     [manager regiestFont:@"?"];
-//    [manager regiestFont:@"IPAexMincho"];
     
-    for (NSString * familyName in [UIFont familyNames]) {
-        NSLog(@"Font FamilyName = %@",familyName); //*输出字体族科名字
-        for (NSString * fontName in [UIFont fontNamesForFamilyName:familyName]) {
-            NSLog(@"\t%@",fontName);
-        }
-    }
     ViewController *vc = [ViewController new];
-    self.window.rootViewController =  vc; //[[UINavigationController alloc]initWithRootViewController: vc];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController: vc];
     return YES;
 }
 

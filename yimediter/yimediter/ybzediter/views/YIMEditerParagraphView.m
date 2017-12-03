@@ -17,6 +17,7 @@
 @property(nonatomic,strong)YIMEditerParagraphAlignmentCell *alignmentCell;
 @property(nonatomic,strong)YIMEditerParagraphLineIndentCell *lineIndentCell;
 @property(nonatomic,strong)YIMEditerParagraphSpacingCell *spacingCell;
+@property(nonatomic,strong)NSArray<YIMEditerStyleBaseCell*>* cellList;
 @end
 
 @implementation YIMEditerParagraphView
@@ -35,6 +36,8 @@
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:tableView];
         
+        self.cellList = @[self.lineIndentCell,self.alignmentCell,self.spacingCell];
+        
         self.tableView = tableView;
     }
     return self;
@@ -45,32 +48,13 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return self.cellList.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return self.lineIndentCell;
-        }
-        if (indexPath.row == 1) {
-            return self.alignmentCell;
-        }
-        if (indexPath.row == 2) {
-            return self.spacingCell;
-        }
-    }
-    return [UITableViewCell new];
+    return self.cellList[indexPath.row];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        if (indexPath.row == 1) {
-            return 54;
-        }
-        if (indexPath.row == 2) {
-            return 69;
-        }
-    }
-    return 44;
+    return [self.cellList[indexPath.row] needHeight];
 }
 
 #pragma -mark get set
@@ -82,7 +66,7 @@
 }
 -(YIMEditerParagraphAlignmentCell*)alignmentCell{
     if (!_alignmentCell) {
-        _alignmentCell = [self.tableView dequeueReusableCellWithIdentifier:@"alignmentCell"];
+        _alignmentCell = [[YIMEditerParagraphAlignmentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         [_alignmentCell setAlignmentChangeBlock:^(NSTextAlignment alignment) {
             [weakSelf alignmentChange:alignment];
@@ -92,7 +76,7 @@
 }
 -(YIMEditerParagraphLineIndentCell*)lineIndentCell{
     if (!_lineIndentCell) {
-        _lineIndentCell = [self.tableView dequeueReusableCellWithIdentifier:@"lineIndentCell"];
+        _lineIndentCell = [[YIMEditerParagraphLineIndentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         [_lineIndentCell setLineIndentChange:^(BOOL isLineIndent) {
             [weakSelf firstLineIndentChange:isLineIndent];
@@ -102,7 +86,7 @@
 }
 -(YIMEditerParagraphSpacingCell *)spacingCell{
     if (!_spacingCell) {
-        _spacingCell = [self.tableView dequeueReusableCellWithIdentifier:@"spacingCell"];
+        _spacingCell = [[YIMEditerParagraphSpacingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         __weak typeof(self) weakSelf = self;
         [_spacingCell setSpacingChange:^(CGFloat height) {
             [weakSelf lineSpacingChange:height];
@@ -110,7 +94,7 @@
     }
     return _spacingCell;
 }
-
+#pragma -mark private methods
 -(void)firstLineIndentChange:(BOOL)newValue{
     if (self.paragraphStyle.firstLineIndent != newValue) {
         self.paragraphStyle.firstLineIndent = newValue;
@@ -135,21 +119,30 @@
     }
 }
 
-#pragma -mark 
+#pragma -mark 实现YIMEditerStyleChangeObject接口
+/**当前样式*/
+-(YIMEditerStyle*)currentStyle{
+    return self.paragraphStyle;
+}
+/**更新UI*/
+-(void)updateUIWithTextAttributes:(YIMEditerDrawAttributes *)attributed{
+    self.paragraphStyle = [[YIMEditerParagraphStyle alloc]initWithAttributed:attributed];
+}
+/**样式变更代理*/
 -(void)setStyleDelegate:(id<YIMEditerStyleChangeDelegate>)styleDelegate{
     self.delegate = styleDelegate;
+}
+-(YIMEditerStyle*)styleUseAttributed:(YIMEditerDrawAttributes *)attributed{
+    return [[YIMEditerParagraphStyle alloc]initWithAttributed:attributed];
 }
 -(id<YIMEditerStyleChangeDelegate>)styleDelegate{
     return self.delegate;
 }
+/**默认样式*/
 -(YIMEditerStyle*)defualtStyle{
     return [YIMEditerParagraphStyle createDefualtStyle];
 }
--(YIMEditerStyle*)currentStyle{
-    return self.paragraphStyle;
-}
--(void)updateUIWithTextAttributes:(YIMEditerDrawAttributes *)attributed{
-    self.paragraphStyle = [[YIMEditerParagraphStyle alloc]initWithAttributed:attributed];
-}
+
+
 
 @end

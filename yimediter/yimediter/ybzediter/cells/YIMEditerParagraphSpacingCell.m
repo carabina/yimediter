@@ -47,6 +47,9 @@
     self.selectView = selectView;
     self.numberLabel = numberLabel;
 }
+-(CGFloat)needHeight{
+    return 69;
+}
 -(void)layoutSubviews{
     self.titleLabel.frame = CGRectMake(0, 4, self.frame.size.width, self.titleLabel.attributedText.size.height);
     self.numberLabel.frame = CGRectMake(0, CGRectGetMaxY(self.titleLabel.frame)+4, self.frame.size.width, 12);

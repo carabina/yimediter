@@ -32,6 +32,9 @@
     self.leftTabButton = leftTabButton;
     self.rightTabButton = rightTabButton;
 }
+-(CGFloat)needHeight{
+    return 54;
+}
 -(void)layoutSubviews{
     CGFloat buttonWidth = 60;
     self.leftTabButton.frame = CGRectMake(CGRectGetMidX(self.frame) - buttonWidth, 0, buttonWidth, CGRectGetHeight(self.frame));

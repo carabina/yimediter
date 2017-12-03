@@ -28,5 +28,12 @@
 -(instancetype)copy{
     return [[YIMEditerStyle alloc]init];
 }
+-(NSString*)htmlStyle{
+    return @"";
+}
+-(NSArray<NSString*>*)htmlAttributed{
+    return @[];
+}
+
 
 @end

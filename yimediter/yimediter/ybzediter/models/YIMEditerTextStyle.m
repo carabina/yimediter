@@ -11,6 +11,7 @@
 #import "YIMEditerTextStyle.h"
 #import "YIMEditerFontFamilyManager.h"
 #import "YIMEditerDrawAttributes.h"
+#import "UIColor+YIMEditerExtend.h"
 
 
 @implementation YIMEditerTextStyle
@@ -119,6 +120,26 @@
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
     return [self copy];
+}
+-(NSString*)htmlStyle{
+    NSMutableString *style = [NSMutableString string];
+    [style appendFormat:@"color:%@;",[self.textColor hexString]];
+    [style appendFormat:@"font-size: %ld;",self.fontSize];
+    [style appendFormat:@"font-family: %@;",self.fontName];
+    return style;
+}
+-(NSArray<NSString*>*)htmlAttributed{
+    NSMutableArray<NSString*>* attributes = [NSMutableArray array];
+    if (self.bold) {
+        [attributes addObject:@"b"];
+    }
+    if (self.italic) {
+        [attributes addObject:@"i"];
+    }
+    if (self.underline) {
+        [attributes addObject:@"u"];
+    }
+    return attributes;
 }
 
 @end

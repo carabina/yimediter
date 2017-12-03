@@ -41,6 +41,9 @@
     self.italicButton = italicButton;
     self.underlineButton = underlineButton;
 }
+-(CGFloat)needHeight{
+    return 54;
+}
 -(void)layoutSubviews{
     [super layoutSubviews];
     [self layoutButtons:@[self.boldButton,self.italicButton,self.underlineButton]];

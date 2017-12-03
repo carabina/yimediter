@@ -49,6 +49,9 @@
     self.rightButton = rightButton;
     self.titleLabel = titleLabel;
 }
+-(CGFloat)needHeight{
+    return 44;
+}
 -(void)layoutSubviews{
     [super layoutSubviews];
     self.titleLabel.frame = CGRectMake(0, 0, self.titleLabel.attributedText.size.width, self.titleLabel.attributedText.size.height);

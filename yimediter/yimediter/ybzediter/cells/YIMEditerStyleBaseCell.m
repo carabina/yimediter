@@ -27,10 +27,6 @@
     self.setting = [YIMEditerSetting appearance];
     [self bottomLineView];
 }
-
--(void)layoutSubviews{
-    [super layoutSubviews];
-}
 -(void)didAddSubview:(UIView *)subview{
     [super didAddSubview:subview];
     [self bringSubviewToFront:self.bottomLineView];
@@ -45,6 +41,10 @@
         [self addSubview:_bottomLineView];
     }
     return _bottomLineView;
+}
+
+-(CGFloat)needHeight{
+    return 44;
 }
 
 @end

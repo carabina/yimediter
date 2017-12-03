@@ -45,14 +45,15 @@
     self.titleLabel = titleLabel;
     self.selectView = selectView;
 }
+-(CGFloat)needHeight{
+    return 64;
+}
 //更新布局
 -(void)layoutSubviews{
     self.titleLabel.frame = CGRectMake(0, 0, self.titleLabel.attributedText.size.width, self.titleLabel.attributedText.size.height);
     self.titleLabel.center = CGPointMake(CGRectGetMidX(self.contentView.frame), self.titleLabel.attributedText.size.height/2 + 8);
     self.selectView.frame = CGRectMake(0, CGRectGetMaxY(self.titleLabel.frame) + 8, CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame) - CGRectGetMaxY(self.titleLabel.frame) - 8);
 }
-
-
 #pragma -mark get set
 //设置字体大小
 -(void)setFontSize:(NSInteger)fontSize{
