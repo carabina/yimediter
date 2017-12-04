@@ -124,7 +124,7 @@
 -(NSString*)htmlStyle{
     NSMutableString *style = [NSMutableString string];
     [style appendFormat:@"color:%@;",[self.textColor hexString]];
-    [style appendFormat:@"font-size: %ld;",self.fontSize];
+    [style appendFormat:@"font-size: %ld;",(long)self.fontSize];
     [style appendFormat:@"font-family: %@;",self.fontName];
     return style;
 }

@@ -11,7 +11,6 @@
 
 #import "YIMEditerTextView.h"
 #import "YIMEditerInputAccessoryView.h"
-#import "NSAttributedString+YIMEditerExtend.h"
 
 
 
