@@ -16,6 +16,6 @@
 
 /**默认返回nil，子类继承返回的view将在点击时切换至textView的inputView*/
 -(UIView*)menuItemInputView;
-/**用户点击该菜单时*/
--(void)clickAction;
+/**用户点击该菜单时,返回值指示是否切换到该item*/
+-(BOOL)clickAction;
 @end

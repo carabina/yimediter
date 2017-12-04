@@ -11,6 +11,11 @@
 
 @class YIMEditerStyle;
 @class YIMEditerDrawAttributes;
+@class YIMEditerTextView;
+
+@protocol YIMEditerTextViewDelegate  <UITextViewDelegate>
+-(void)textView:(YIMEditerTextView*)textView styleDidChange:(YIMEditerStyle*)style;
+@end
 
 /**文字样式变更代理*/
 @protocol YIMEditerStyleChangeDelegate <NSObject>

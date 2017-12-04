@@ -52,7 +52,7 @@
     YIMEditerParagraphStyle *style = [[YIMEditerParagraphStyle alloc]init];
     style.firstLineIndent = false;
     style.alignment = NSTextAlignmentNatural;
-    style.lineSpacing = 7;
+    style.lineSpacing = 5.0;
     return style;
 }
 

@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"test" style:UIBarButtonItemStyleDone target:self action:@selector(clickTest:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"to html" style:UIBarButtonItemStyleDone target:self action:@selector(clickTest:)];
     
     
     YIMEditerTextView *textView = [[YIMEditerTextView alloc]init];
