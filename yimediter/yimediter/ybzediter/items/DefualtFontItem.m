@@ -17,7 +17,7 @@
 @implementation DefualtFontItem
 
 -(instancetype)init{
-    return [super initWithImage:[UIImage imageNamed:@"font"]];
+    return [super initWithImage:[UIImage imageNamed:@"yimediter.bundle/font"]];
 }
 
 -(UIView*)menuItemInputView{

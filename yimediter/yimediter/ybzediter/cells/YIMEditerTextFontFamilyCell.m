@@ -27,7 +27,7 @@
     [self.contentView addConstraint: [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:label attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[label]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.contentView,label)]];
     
-    UIImageView *moreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"more"]];
+    UIImageView *moreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"yimediter.bundle/more"]];
     moreImageView.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:moreImageView];
     

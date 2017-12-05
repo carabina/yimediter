@@ -21,20 +21,20 @@
     [super setup];
     UIButton *boldButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [boldButton addTarget:self action:@selector(clickBold:) forControlEvents:UIControlEventTouchUpInside];
-    [boldButton setImage:[UIImage imageNamed:@"bold"] forState:UIControlStateNormal];
-    [boldButton setImage:[[UIImage imageNamed:@"bold"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [boldButton setImage:[UIImage imageNamed:@"yimediter.bundle/bold"] forState:UIControlStateNormal];
+    [boldButton setImage:[[UIImage imageNamed:@"yimediter.bundle/bold"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:boldButton];
     
     UIButton *italicButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [italicButton addTarget:self action:@selector(clickItalic:) forControlEvents:UIControlEventTouchUpInside];
-    [italicButton setImage:[UIImage imageNamed:@"italic"] forState:UIControlStateNormal];
-    [italicButton setImage:[[UIImage imageNamed:@"italic"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [italicButton setImage:[UIImage imageNamed:@"yimediter.bundle/italic"] forState:UIControlStateNormal];
+    [italicButton setImage:[[UIImage imageNamed:@"yimediter.bundle/italic"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:italicButton];
     
     UIButton *underlineButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [underlineButton addTarget:self action:@selector(clickUnderline:) forControlEvents:UIControlEventTouchUpInside];
-    [underlineButton setImage:[UIImage imageNamed:@"underline"] forState:UIControlStateNormal];
-    [underlineButton setImage:[[UIImage imageNamed:@"underline"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [underlineButton setImage:[UIImage imageNamed:@"yimediter.bundle/underline"] forState:UIControlStateNormal];
+    [underlineButton setImage:[[UIImage imageNamed:@"yimediter.bundle/underline"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:underlineButton];
     
     self.boldButton = boldButton;

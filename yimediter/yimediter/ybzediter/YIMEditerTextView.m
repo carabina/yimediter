@@ -97,7 +97,7 @@
 #pragma -mark get set
 -(void)setMenus:(NSArray<YIMEditerAccessoryMenuItem *> *)menus{
     NSMutableArray* arr = [NSMutableArray array];
-    [arr addObject:[[YIMEditerAccessoryMenuItem alloc]initWithImage:[UIImage imageNamed:@"keyboard"]]];
+    [arr addObject:[[YIMEditerAccessoryMenuItem alloc]initWithImage:[UIImage imageNamed:@"yimediter.bundle/keyboard"]]];
     [arr addObjectsFromArray:menus];
     _menus = arr;
     ((YIMEditerInputAccessoryView*)self.inputAccessoryView).items = arr;

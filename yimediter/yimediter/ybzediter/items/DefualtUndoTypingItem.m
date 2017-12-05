@@ -22,7 +22,7 @@
     self.history = [NSMutableArray array];
     first = [[NSAttributedString alloc]initWithString:@""];
     [self.history addObject:first];
-    return [self initWithImage:[UIImage imageNamed:@"ctrlz"]];
+    return [self initWithImage:[UIImage imageNamed:@"yimediter.bundle/ctrlz"]];
 }
 -(BOOL)clickAction{
     if (self.history.count > 1) {

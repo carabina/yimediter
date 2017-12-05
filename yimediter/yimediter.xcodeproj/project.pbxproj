@@ -17,17 +17,9 @@
 		5C7615231FD001820032C516 /* YIMEditerParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615221FD001820032C516 /* YIMEditerParagraphView.m */; };
 		5C7615261FD003DD0032C516 /* YIMEditerParagraphAlignmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615251FD003DD0032C516 /* YIMEditerParagraphAlignmentCell.m */; };
 		5C7615291FD014010032C516 /* YIMEditerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615281FD014010032C516 /* YIMEditerStyle.m */; };
-		5C8A3A941FCEC18A0045D37E /* 行楷-Bold.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A921FCEC18A0045D37E /* 行楷-Bold.ttc */; };
-		5C8A3A951FCEC18A0045D37E /* 行楷-Regular.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A931FCEC18A0045D37E /* 行楷-Regular.ttc */; };
-		5C8A3A9A1FCEC4000045D37E /* 山文丰手写体.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A961FCEC3FF0045D37E /* 山文丰手写体.ttf */; };
-		5C8A3A9B1FCEC4000045D37E /* 傲娇体.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A971FCEC3FF0045D37E /* 傲娇体.ttf */; };
-		5C8A3A9D1FCEC4000045D37E /* Kaiti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A991FCEC4000045D37E /* Kaiti.ttf */; };
-		5C8A3A9F1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A3A9E1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf */; };
 		5CB23B621FD163EE000F2F57 /* DefualtParagraphItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */; };
 		5CB23B651FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */; };
 		5CB23B681FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */; };
-		5CBD354D1FCE53BC00107D69 /* 杨任东竹石体-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CBD354B1FCE53BB00107D69 /* 杨任东竹石体-Bold.ttf */; };
-		5CBD354E1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CBD354C1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf */; };
 		5CBEA0611FBEBB4700D29998 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEA0601FBEBB4700D29998 /* AppDelegate.m */; };
 		5CBEA0641FBEBB4700D29998 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEA0631FBEBB4700D29998 /* ViewController.m */; };
 		5CBEA0671FBEBB4700D29998 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CBEA0651FBEBB4700D29998 /* Main.storyboard */; };
@@ -74,20 +66,12 @@
 		5C7615271FD014010032C516 /* YIMEditerStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerStyle.h; sourceTree = "<group>"; };
 		5C7615281FD014010032C516 /* YIMEditerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerStyle.m; sourceTree = "<group>"; };
 		5C76152E1FD01E860032C516 /* YIMEditerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerProtocol.h; sourceTree = "<group>"; };
-		5C8A3A921FCEC18A0045D37E /* 行楷-Bold.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "行楷-Bold.ttc"; sourceTree = "<group>"; };
-		5C8A3A931FCEC18A0045D37E /* 行楷-Regular.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "行楷-Regular.ttc"; sourceTree = "<group>"; };
-		5C8A3A961FCEC3FF0045D37E /* 山文丰手写体.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "山文丰手写体.ttf"; sourceTree = "<group>"; };
-		5C8A3A971FCEC3FF0045D37E /* 傲娇体.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "傲娇体.ttf"; sourceTree = "<group>"; };
-		5C8A3A991FCEC4000045D37E /* Kaiti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kaiti.ttf; sourceTree = "<group>"; };
-		5C8A3A9E1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "伯乐钢笔行书体.ttf"; sourceTree = "<group>"; };
 		5CB23B601FD163EE000F2F57 /* DefualtParagraphItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefualtParagraphItem.h; sourceTree = "<group>"; };
 		5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefualtParagraphItem.m; sourceTree = "<group>"; };
 		5CB23B631FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphLineIndentCell.h; sourceTree = "<group>"; };
 		5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerParagraphLineIndentCell.m; sourceTree = "<group>"; };
 		5CB23B661FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphSpacingCell.h; sourceTree = "<group>"; };
 		5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerParagraphSpacingCell.m; sourceTree = "<group>"; };
-		5CBD354B1FCE53BB00107D69 /* 杨任东竹石体-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "杨任东竹石体-Bold.ttf"; sourceTree = "<group>"; };
-		5CBD354C1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "杨任东竹石体-Regular.ttf"; sourceTree = "<group>"; };
 		5CBEA05C1FBEBB4700D29998 /* yimediter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yimediter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBEA05F1FBEBB4700D29998 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5CBEA0601FBEBB4700D29998 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -230,14 +214,6 @@
 		5CC6281A1FC9C9120094D972 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				5C8A3A9E1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf */,
-				5C8A3A971FCEC3FF0045D37E /* 傲娇体.ttf */,
-				5C8A3A961FCEC3FF0045D37E /* 山文丰手写体.ttf */,
-				5C8A3A991FCEC4000045D37E /* Kaiti.ttf */,
-				5C8A3A921FCEC18A0045D37E /* 行楷-Bold.ttc */,
-				5C8A3A931FCEC18A0045D37E /* 行楷-Regular.ttc */,
-				5CBD354B1FCE53BB00107D69 /* 杨任东竹石体-Bold.ttf */,
-				5CBD354C1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -372,17 +348,9 @@
 			files = (
 				5C2F6B1C1FD453AA00715E94 /* yimediter.bundle in Resources */,
 				5CBEA06C1FBEBB4700D29998 /* LaunchScreen.storyboard in Resources */,
-				5C8A3A9A1FCEC4000045D37E /* 山文丰手写体.ttf in Resources */,
-				5C8A3A951FCEC18A0045D37E /* 行楷-Regular.ttc in Resources */,
-				5C8A3A941FCEC18A0045D37E /* 行楷-Bold.ttc in Resources */,
 				5CC628121FC965ED0094D972 /* String.strings in Resources */,
 				5CBEA0691FBEBB4700D29998 /* Assets.xcassets in Resources */,
-				5CBD354D1FCE53BC00107D69 /* 杨任东竹石体-Bold.ttf in Resources */,
 				5CBEA0671FBEBB4700D29998 /* Main.storyboard in Resources */,
-				5CBD354E1FCE53BC00107D69 /* 杨任东竹石体-Regular.ttf in Resources */,
-				5C8A3A9F1FCEC4D00045D37E /* 伯乐钢笔行书体.ttf in Resources */,
-				5C8A3A9B1FCEC4000045D37E /* 傲娇体.ttf in Resources */,
-				5C8A3A9D1FCEC4000045D37E /* Kaiti.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

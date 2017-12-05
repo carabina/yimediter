@@ -11,7 +11,7 @@
 @implementation DefualtParagraphItem
 
 -(instancetype)init{
-    return [self initWithImage:[UIImage imageNamed:@"paragraph"]];
+    return [self initWithImage:[UIImage imageNamed:@"yimediter.bundle/paragraph"]];
 }
 -(UIView*)menuItemInputView{
     return self.paragraphView;
