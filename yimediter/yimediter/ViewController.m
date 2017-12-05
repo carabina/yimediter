@@ -7,16 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "YIMEditerInputAccessoryView.h"
-#import "YIMEditerSetting.h"
-#import "YIMEditerFontView.h"
+
 #import "YIMEditerTextView.h"
-#import "DefualtFontItem.h"
-#import "DefualtParagraphItem.h"
+#import "WebViewController.h"
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) YIMEditerTextView *textView;
 
 @end
 
@@ -25,13 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"to html" style:UIBarButtonItemStyleDone target:self action:@selector(clickTest:)];
     
-    
-//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]init];
-//    for (NSString* f in fonts.allKeys) {
-//        [str appendAttributedString:[[NSAttributedString alloc]initWithString:f]];
-//        [str appendAttributedString:[[NSAttributedString alloc]initWithString:@"我随手一打就是漂亮的十五个字\n" attributes:@{NSFontAttributeName:fonts[f]}]];
-//    }
     
     YIMEditerTextView *textView = [[YIMEditerTextView alloc]init];
     
@@ -39,14 +31,12 @@
     textView.translatesAutoresizingMaskIntoConstraints = false;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[textView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.view,textView)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[textView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self.view,textView)]];
-
-    
-    DefualtFontItem *item = [[DefualtFontItem alloc]init];
-    DefualtParagraphItem *item1 = [[DefualtParagraphItem alloc]init];
-    
-    textView.menus = @[item,item1];
-    [textView addStyleChangeObject:item.fontView];
-    [textView addStyleChangeObject:item1.paragraphView];
+    self.textView = textView;
+}
+-(void)clickTest:(id)sender{
+    WebViewController *webVc = [[WebViewController alloc]init];
+    webVc.htmlString = [self.textView outPutHtmlString];
+    [self.navigationController pushViewController:webVc animated:true];
 }
 
 

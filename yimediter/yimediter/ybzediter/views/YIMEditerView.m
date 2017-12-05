@@ -11,4 +11,15 @@
 
 @implementation YIMEditerView
 
+-(instancetype)init{
+    return [self initWithFrame:CGRectZero];
+}
+
+-(instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        self.setting = [YIMEditerSetting appearance];
+    }
+    return self;
+}
+
 @end

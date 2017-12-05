@@ -11,11 +11,12 @@
 @class YIMEditerDrawAttributes;
 
 /**表示样式基类*/
-@interface YIMEditerStyle : NSObject
+@interface YIMEditerStyle : NSObject <NSCopying>
 
 /**是否段落样式*/
 @property(nonatomic,assign,readonly)BOOL isParagraphStyle;
 
+/**创建默认样式*/
 +(instancetype)createDefualtStyle;
 
 /**根据文字绘制属性初始化*/
@@ -23,5 +24,10 @@
 
 /**输出绘制属性*/
 -(YIMEditerDrawAttributes*)outPutAttributed;
+
+/**html的style*/
+-(NSString*)htmlStyle;
+/**html需要包含的标签*/
+-(NSArray<NSString*>*)htmlAttributed;
 
 @end

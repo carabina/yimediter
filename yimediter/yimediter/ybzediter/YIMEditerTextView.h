@@ -7,9 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YIMEditerProtocol.h"
 
-@class YIMEditerAccessoryMenuItem;
+#import "YIMEditerAccessoryMenuItem.h"
+#import "YIMEditerFontFamilyManager.h"
+#import "YIMEditerDrawAttributes.h"
+#import "YIMEditerParagraphView.h"
+#import "YIMEditerProtocol.h"
+#import "YIMEditerFontView.h"
+#import "YIMEditerSetting.h"
+#import "DefualtFontItem.h"
+#import "DefualtParagraphItem.h"
+#import "DefualtUndoTypingItem.h"
+
+
 
 
 /**
@@ -17,19 +27,20 @@
  */
 @interface YIMEditerTextView : UITextView
 
+/**菜单栏*/
 @property(nonatomic,strong)NSArray<YIMEditerAccessoryMenuItem*>* menus;
-/**不要直接使用该textView的delegate，请使用userDelegate*/
-@property(nonatomic,strong)id<UITextViewDelegate> userDelegates;
 /**到新window时是否进入第一响应者 默认是true*/
 @property(nonatomic,assign)BOOL toNewWindowIsBecomeFirstResponder;
+/**所有样式对象*/
+@property(nonatomic,strong,readonly)NSArray<id<YIMEditerStyleChangeObject>> *styleObjects;
 
-
-
-
-/**
- 添加一个样式对象
- 
- */
+/** 根据textView选择的range，更新所有样式对象的UI */
+-(void)updateObjectsUI;
+/** 添加代理 */
+-(void)addUserDelegate:(id<YIMEditerTextViewDelegate>)del;
+/** 添加一个样式对象 */
 -(void)addStyleChangeObject:(id<YIMEditerStyleChangeObject>)styleChangeObj;
+/** 输出html */
+-(NSString*)outPutHtmlString;
 
 @end

@@ -28,26 +28,29 @@
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton addTarget:self action:@selector(clickLeft:) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton setImage:[UIImage imageNamed:@"left"] forState:UIControlStateNormal];
-    [leftButton setImage:[[UIImage imageNamed:@"left"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [leftButton setImage:[UIImage imageNamed:@"yimediter.bundle/left"] forState:UIControlStateNormal];
+    [leftButton setImage:[[UIImage imageNamed:@"yimediter.bundle/left"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:leftButton];
     
     UIButton *centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [centerButton addTarget:self action:@selector(clickCenter:) forControlEvents:UIControlEventTouchUpInside];
-    [centerButton setImage:[UIImage imageNamed:@"center"] forState:UIControlStateNormal];
-    [centerButton setImage:[[UIImage imageNamed:@"center"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [centerButton setImage:[UIImage imageNamed:@"yimediter.bundle/center"] forState:UIControlStateNormal];
+    [centerButton setImage:[[UIImage imageNamed:@"yimediter.bundle/center"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:centerButton];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton addTarget:self action:@selector(clickRight:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    [rightButton setImage:[[UIImage imageNamed:@"right"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
+    [rightButton setImage:[UIImage imageNamed:@"yimediter.bundle/right"] forState:UIControlStateNormal];
+    [rightButton setImage:[[UIImage imageNamed:@"yimediter.bundle/right"]YIMImageWithTintColor:self.setting.tintColor] forState:UIControlStateSelected];
     [self.contentView addSubview:rightButton];
     
     self.leftButton = leftButton;
     self.centerButton = centerButton;
     self.rightButton = rightButton;
     self.titleLabel = titleLabel;
+}
+-(CGFloat)needHeight{
+    return 44;
 }
 -(void)layoutSubviews{
     [super layoutSubviews];

@@ -15,6 +15,6 @@
 
 @property(nonatomic,strong)UIColor *tintColor;
 
-
++(instancetype)appearance;
 
 @end

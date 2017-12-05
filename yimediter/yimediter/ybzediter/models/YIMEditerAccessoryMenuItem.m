@@ -19,7 +19,7 @@
 -(UIView*)menuItemInputView{
     return nil;
 }
--(void)clickAction{
-    
+-(BOOL)clickAction{
+    return true;
 }
 @end

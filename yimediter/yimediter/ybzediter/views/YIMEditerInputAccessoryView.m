@@ -169,9 +169,12 @@
 #pragma -mark events
 -(void)clickItemView:(YIMEditerInputAccessoryItemView*)itemView{
     NSInteger index = [self.itemViews indexOfObject:itemView];
-    self.currentIndex = index;
     if([self.delegate respondsToSelector:@selector(YIMEditerInputAccessoryView:clickItemAtIndex:)]){
-        [self.delegate YIMEditerInputAccessoryView:self clickItemAtIndex:index];
+        if([self.delegate YIMEditerInputAccessoryView:self clickItemAtIndex:index]){
+            self.currentIndex = index;
+        }
+    }else{
+        self.currentIndex = index;
     }
 }
 

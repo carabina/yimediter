@@ -38,6 +38,9 @@
     self.titleLabel = titleLabel;
     self.selectView = selectView;
 }
+-(CGFloat)needHeight{
+    return 70;
+}
 -(void)layoutSubviews{
     self.titleLabel.frame = CGRectMake(0, 0, self.titleLabel.attributedText.size.width, self.titleLabel.attributedText.size.height);
     self.titleLabel.center = CGPointMake(CGRectGetMidX(self.frame), self.titleLabel.attributedText.size.height/2 + 8);

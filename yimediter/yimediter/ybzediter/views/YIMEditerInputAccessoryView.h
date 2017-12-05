@@ -13,8 +13,11 @@
 
 @protocol YIMEditerInputAccessoryViewDelegate <NSObject>
 
-/**点击Item时执行*/
--(void)YIMEditerInputAccessoryView:(YIMEditerInputAccessoryView*)accessoryView clickItemAtIndex:(NSInteger)index;
+/**
+ 点击Item时执行
+ 返回值是否选中到该item
+ */
+-(BOOL)YIMEditerInputAccessoryView:(YIMEditerInputAccessoryView*)accessoryView clickItemAtIndex:(NSInteger)index;
 
 @end
 

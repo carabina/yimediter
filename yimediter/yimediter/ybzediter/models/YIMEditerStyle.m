@@ -14,14 +14,26 @@
 +(instancetype)createDefualtStyle{
     return [self init];
 }
-
 -(instancetype)initWithAttributed:(YIMEditerDrawAttributes *)attributed{
     return [super init];
 }
-
 -(YIMEditerDrawAttributes*)outPutAttributed{
     YIMEditerDrawAttributes *att = [[YIMEditerDrawAttributes alloc]init];
     return att;
 }
+
+-(instancetype)copyWithZone:(NSZone *)zone{
+    return [[YIMEditerStyle alloc]init];
+}
+-(instancetype)copy{
+    return [[YIMEditerStyle alloc]init];
+}
+-(NSString*)htmlStyle{
+    return @"";
+}
+-(NSArray<NSString*>*)htmlAttributed{
+    return @[];
+}
+
 
 @end

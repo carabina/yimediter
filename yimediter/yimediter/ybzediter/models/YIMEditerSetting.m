@@ -10,4 +10,14 @@
 
 @implementation YIMEditerSetting
 
+static YIMEditerSetting *_yimEditerSettingAppearance;
++(instancetype)appearance{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _yimEditerSettingAppearance = [[YIMEditerSetting alloc]init];
+        _yimEditerSettingAppearance.tintColor = [UIColor colorWithRed:0x91/255.0 green:0xC1/255.0 blue:0xE1/255.0 alpha:1];
+    });
+    return _yimEditerSettingAppearance;
+}
+
 @end
