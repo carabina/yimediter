@@ -35,8 +35,6 @@
     
     YIMEditerFontFamilyManager *manager = [YIMEditerFontFamilyManager defualtManager];
     //注册字体
-    [manager regiestFont:@"PingFang SC"];
-    [manager regiestFont:@"Heiti SC"];
     [manager regiestFont:@"Kaiti"];
     [manager regiestFont:@"Xingkai SC"];
     [manager regiestFont:@"YRDZST"];

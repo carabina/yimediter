@@ -44,6 +44,11 @@
     [self setUp];
 }
 -(void)setUp{
+    //注册苹果内置的两种中文字体
+    YIMEditerFontFamilyManager *manager = [YIMEditerFontFamilyManager defualtManager];
+    [manager regiestFont:@"PingFang SC"];
+    [manager regiestFont:@"Heiti SC"];
+    
     self.delegate = self;
     self.toNewWindowIsBecomeFirstResponder = true;
     self.delegateList = [NSMutableArray array];
