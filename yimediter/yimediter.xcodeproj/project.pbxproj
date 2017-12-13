@@ -17,6 +17,7 @@
 		5C7615231FD001820032C516 /* YIMEditerParagraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615221FD001820032C516 /* YIMEditerParagraphView.m */; };
 		5C7615261FD003DD0032C516 /* YIMEditerParagraphAlignmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615251FD003DD0032C516 /* YIMEditerParagraphAlignmentCell.m */; };
 		5C7615291FD014010032C516 /* YIMEditerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7615281FD014010032C516 /* YIMEditerStyle.m */; };
+		5C781B131FDE93CD00CCFDB4 /* HtmlElement.c in Sources */ = {isa = PBXBuildFile; fileRef = 5C781B121FDE93CD00CCFDB4 /* HtmlElement.c */; };
 		5CB23B621FD163EE000F2F57 /* DefualtParagraphItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */; };
 		5CB23B651FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B641FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m */; };
 		5CB23B681FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB23B671FD298FF000F2F57 /* YIMEditerParagraphSpacingCell.m */; };
@@ -41,6 +42,8 @@
 		5CED35EF1FC436AA002FAAAE /* UIImage+YIMEditerImageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CED35EE1FC436AA002FAAAE /* UIImage+YIMEditerImageExtend.m */; };
 		5CED35F51FC47808002FAAAE /* YIMScrollSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CED35F41FC47808002FAAAE /* YIMScrollSelectView.m */; };
 		5CED35F81FC48786002FAAAE /* YIMEditerTextFontSizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CED35F71FC48786002FAAAE /* YIMEditerTextFontSizeCell.m */; };
+		5CEE24F91FE0F90D00EA171F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5CEE24F81FE0F90D00EA171F /* README.md */; };
+		5CEE24FB1FE0F97500EA171F /* yimediter.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5CEE24FA1FE0F97500EA171F /* yimediter.podspec */; };
 		5CF749121FD10876000061A7 /* YIMEditerDrawAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF749111FD10876000061A7 /* YIMEditerDrawAttributes.m */; };
 		5CF749161FD13AAB000061A7 /* DefualtFontItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF749151FD13AAB000061A7 /* DefualtFontItem.m */; };
 /* End PBXBuildFile section */
@@ -66,6 +69,8 @@
 		5C7615271FD014010032C516 /* YIMEditerStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerStyle.h; sourceTree = "<group>"; };
 		5C7615281FD014010032C516 /* YIMEditerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerStyle.m; sourceTree = "<group>"; };
 		5C76152E1FD01E860032C516 /* YIMEditerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerProtocol.h; sourceTree = "<group>"; };
+		5C781B111FDE93CD00CCFDB4 /* HtmlElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HtmlElement.h; sourceTree = "<group>"; };
+		5C781B121FDE93CD00CCFDB4 /* HtmlElement.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HtmlElement.c; sourceTree = "<group>"; };
 		5CB23B601FD163EE000F2F57 /* DefualtParagraphItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefualtParagraphItem.h; sourceTree = "<group>"; };
 		5CB23B611FD163EE000F2F57 /* DefualtParagraphItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefualtParagraphItem.m; sourceTree = "<group>"; };
 		5CB23B631FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerParagraphLineIndentCell.h; sourceTree = "<group>"; };
@@ -115,6 +120,8 @@
 		5CED35F41FC47808002FAAAE /* YIMScrollSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMScrollSelectView.m; sourceTree = "<group>"; };
 		5CED35F61FC48786002FAAAE /* YIMEditerTextFontSizeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerTextFontSizeCell.h; sourceTree = "<group>"; };
 		5CED35F71FC48786002FAAAE /* YIMEditerTextFontSizeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerTextFontSizeCell.m; sourceTree = "<group>"; };
+		5CEE24F81FE0F90D00EA171F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		5CEE24FA1FE0F97500EA171F /* yimediter.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = yimediter.podspec; path = ../../yimediter.podspec; sourceTree = "<group>"; };
 		5CF749101FD10876000061A7 /* YIMEditerDrawAttributes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YIMEditerDrawAttributes.h; sourceTree = "<group>"; };
 		5CF749111FD10876000061A7 /* YIMEditerDrawAttributes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YIMEditerDrawAttributes.m; sourceTree = "<group>"; };
 		5CF749141FD13AAB000061A7 /* DefualtFontItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefualtFontItem.h; sourceTree = "<group>"; };
@@ -171,6 +178,8 @@
 				5CBEA06A1FBEBB4700D29998 /* LaunchScreen.storyboard */,
 				5CBEA06D1FBEBB4700D29998 /* Info.plist */,
 				5CBEA06E1FBEBB4700D29998 /* main.m */,
+				5CEE24F81FE0F90D00EA171F /* README.md */,
+				5CEE24FA1FE0F97500EA171F /* yimediter.podspec */,
 				5CC628141FC965ED0094D972 /* String.strings */,
 			);
 			path = yimediter;
@@ -236,6 +245,8 @@
 				5C76152E1FD01E860032C516 /* YIMEditerProtocol.h */,
 				5CF749101FD10876000061A7 /* YIMEditerDrawAttributes.h */,
 				5CF749111FD10876000061A7 /* YIMEditerDrawAttributes.m */,
+				5C781B111FDE93CD00CCFDB4 /* HtmlElement.h */,
+				5C781B121FDE93CD00CCFDB4 /* HtmlElement.c */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -346,11 +357,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CEE24F91FE0F90D00EA171F /* README.md in Resources */,
 				5C2F6B1C1FD453AA00715E94 /* yimediter.bundle in Resources */,
 				5CBEA06C1FBEBB4700D29998 /* LaunchScreen.storyboard in Resources */,
 				5CC628121FC965ED0094D972 /* String.strings in Resources */,
 				5CBEA0691FBEBB4700D29998 /* Assets.xcassets in Resources */,
 				5CBEA0671FBEBB4700D29998 /* Main.storyboard in Resources */,
+				5CEE24FB1FE0F97500EA171F /* yimediter.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +403,7 @@
 				5CBEA0791FBEBC7800D29998 /* YIMEditerInputAccessoryView.m in Sources */,
 				5CF749161FD13AAB000061A7 /* DefualtFontItem.m in Sources */,
 				5CED35F81FC48786002FAAAE /* YIMEditerTextFontSizeCell.m in Sources */,
+				5C781B131FDE93CD00CCFDB4 /* HtmlElement.c in Sources */,
 				5C7615201FCFFE5E0032C516 /* YIMEditerParagraphStyle.m in Sources */,
 				5CB23B651FD2522C000F2F57 /* YIMEditerParagraphLineIndentCell.m in Sources */,
 			);

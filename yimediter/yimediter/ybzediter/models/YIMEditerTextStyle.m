@@ -38,7 +38,8 @@
         self.fontSize = font.pointSize;
     }
     if ([attribute.allKeys containsObject:NSForegroundColorAttributeName]) {
-        self.textColor = [attribute objectForKey:NSForegroundColorAttributeName];
+        UIColor *color = [attribute objectForKey:NSForegroundColorAttributeName];
+        self.textColor = color;
     }
     if ([attribute.allKeys containsObject:NSUnderlineStyleAttributeName]) {
         if ([attribute[NSUnderlineStyleAttributeName] integerValue] == NSUnderlineStyleNone) {
@@ -49,6 +50,49 @@
     }
     return self;
 }
+
++(instancetype)createWithHtmlElement:(struct HtmlElement)element content:(NSString *__autoreleasing *)content{
+    YIMEditerTextStyle* textStyle = [YIMEditerTextStyle createDefualtStyle];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:element.attr_json length:strlen(element.attr_json)] options:NSJSONReadingMutableLeaves error:&error];
+    if (!error && [json isKindOfClass:[NSDictionary class]] && [json.allKeys containsObject:@"style"]) {
+        NSString* style = json[@"style"];
+        NSArray<NSString*>* attrs = [style componentsSeparatedByString:@";"];
+        for (NSString* attr in attrs) {
+            NSArray<NSString*>* key_value = [attr componentsSeparatedByString:@":"];
+            if (key_value.count == 2) {
+                if ([key_value[0] isEqualToString:@"color"]) {
+                    textStyle.textColor = [UIColor colorWithHexString:key_value[1]];
+                }
+                if ([key_value[0] isEqualToString:@"font-size"]) {
+                    textStyle.fontSize = [key_value[1] integerValue];
+                }
+                if ([key_value[0] isEqualToString:@"font-family"]) {
+                    textStyle.fontName = key_value[1];
+                }
+            }
+        }
+    }
+    
+    *content = [NSString stringWithUTF8String:element.content];
+    while (element.sub_elecount) {
+        element = *element.sub_elements;
+        if (strcmp(element.tag_name, "b") == 0) {
+            textStyle.bold = true;
+        }
+        if (strcmp(element.tag_name, "i") == 0) {
+            textStyle.italic = true;
+        }
+        if (strcmp(element.tag_name, "u") == 0) {
+            textStyle.underline = true;
+        }
+        if (strlen(element.content)) {
+            *content = [NSString stringWithUTF8String:element.content];
+        }
+    }
+    return textStyle;
+}
+
 -(YIMEditerDrawAttributes*)outPutAttributed{
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     NSNumber *weight = [NSNumber numberWithFloat:0];
@@ -62,7 +106,6 @@
     UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:
                                         @{
                                           UIFontDescriptorFamilyAttribute:self.fontName,
-                                          UIFontDescriptorSizeAttribute:@(self.fontSize),
                                           UIFontDescriptorMatrixAttribute:matrix,
                                           UIFontDescriptorTraitsAttribute:@{UIFontWeightTrait:weight}
                                           }];
@@ -94,7 +137,7 @@
     return @[
              [UIColor blackColor],
              [UIColor colorWithRed:10/255.f green:41/255.f blue:147/255.f alpha:1],
-             [UIColor colorWithRed:218/255.f green:101/255.f blue:320/255.f alpha:1],
+             [UIColor colorWithRed:218/255.f green:101/255.f blue:220/255.f alpha:1],
              [UIColor colorWithRed:135/255.f green:135/255.f blue:135/255.f alpha:1],
              [UIColor colorWithRed:101/255.f green:152/255.f blue:201/255.f alpha:1],
              [UIColor colorWithRed:240/255.f green:200/255.f blue:50/255.f alpha:1],
@@ -117,6 +160,18 @@
     s.underline = self.underline;
     return s;
 }
+-(void)setFontName:(NSString *)fontName{
+    NSArray<NSString*>* allFonts = [[self class] styleAllFontName];
+    bool isHas = false;
+    for (NSString *f in allFonts) {
+        if ([f isEqualToString:fontName]) {
+            isHas = true;
+            break;
+        }
+    }
+    NSAssert(isHas, @"");
+    _fontName = fontName;
+}
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
     return [self copy];
@@ -124,8 +179,8 @@
 -(NSString*)htmlStyle{
     NSMutableString *style = [NSMutableString string];
     [style appendFormat:@"color:%@;",[self.textColor hexString]];
-    [style appendFormat:@"font-size: %ld;",(long)self.fontSize];
-    [style appendFormat:@"font-family: %@;",self.fontName];
+    [style appendFormat:@"font-size:%ld;",(long)self.fontSize];
+    [style appendFormat:@"font-family:%@;",self.fontName];
     return style;
 }
 -(NSArray<NSString*>*)htmlAttributed{
@@ -141,5 +196,4 @@
     }
     return attributes;
 }
-
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HtmlElement.h"
 
 @class YIMEditerDrawAttributes;
 
@@ -29,5 +30,7 @@
 -(NSString*)htmlStyle;
 /**html需要包含的标签*/
 -(NSArray<NSString*>*)htmlAttributed;
+
++(instancetype)createWithHtmlElement:(struct HtmlElement)element content:(NSString**)content;
 
 @end
