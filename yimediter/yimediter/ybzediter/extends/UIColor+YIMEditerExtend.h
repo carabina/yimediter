@@ -11,6 +11,5 @@
 @interface UIColor (YIMEditerExtend)
 
 -(NSString*)hexString;
-+(nonnull UIColor*)colorWithHexString:(NSString*)hexStr;
 
 @end

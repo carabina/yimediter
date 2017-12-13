@@ -22,7 +22,6 @@
 
 
 
-
 /**
  YIMEditer的TextView
  */
@@ -43,7 +42,5 @@
 -(void)addStyleChangeObject:(id<YIMEditerStyleChangeObject>)styleChangeObj;
 /** 输出html */
 -(NSString*)outPutHtmlString;
-/** 设置html，注意，，最好设置由该TextView输出的html，其他html崩溃不负责。。 */
--(void)setHtml:(NSString*)htmlString;
 
 @end
