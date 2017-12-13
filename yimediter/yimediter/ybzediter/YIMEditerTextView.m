@@ -11,6 +11,7 @@
 
 #import "YIMEditerTextView.h"
 #import "YIMEditerInputAccessoryView.h"
+#include "HtmlElement.h"
 
 
 
@@ -81,6 +82,8 @@
 }
 -(void)willMoveToWindow:(UIWindow *)newWindow{
     [super willMoveToWindow:newWindow];
+    NSAttributedString *s = self.attributedText;
+    NSLog(@"%@",s);
     if (newWindow) {
         if(self.toNewWindowIsBecomeFirstResponder)
             [self becomeFirstResponder];
@@ -153,18 +156,31 @@
     //设置下一个字符的属性
     [self setTypingWithAttributed:attributes];
 }
+
+
+
+
+
+
+
 -(NSString*)outPutHtmlString{
     NSMutableString* htmlString = [NSMutableString string];
     
     BOOL isNewParagraph = true;
     NSRange effectiveRange = NSMakeRange(0, 0);
     while (effectiveRange.location + effectiveRange.length < self.text.length) {
+        
         NSDictionary *attributes = [self.attributedText attributesAtIndex:effectiveRange.location+effectiveRange.length effectiveRange:&effectiveRange];
+        
         YIMEditerDrawAttributes *drawAttributes = [[YIMEditerDrawAttributes alloc]initWithAttributeString:attributes];
         
+        //字符的html style
         NSMutableString *htmlStyleString = [NSMutableString string];
+        //字符的html tag
         NSMutableArray<NSString*>* htmlAttributes = [NSMutableArray array];
+        //段落的html style
         NSMutableString *paragraphHtmlStyleString = [NSMutableString string];
+        //段落的html tag
         NSMutableArray<NSString*>* paragraphHtmlAttributes = [NSMutableArray array];
         for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
             YIMEditerStyle *style = [obj styleUseAttributed:drawAttributes];
@@ -176,29 +192,74 @@
                 [htmlAttributes addObjectsFromArray:[style htmlAttributed]];
             }
         }
-        if (isNewParagraph) {
-            [htmlString appendFormat:@"<p style=\"%@\">",paragraphHtmlStyleString];
-            for (NSString* htmlAttr in paragraphHtmlAttributes) {
-                [htmlString appendFormat:@"<%@>",htmlAttr];
+        
+        //根据换行符分段
+        NSArray<NSString*>* strs = [[self.text substringWithRange:effectiveRange] componentsSeparatedByString:@"\n"];
+        for (int i = 0; i < strs.count; i++) {
+            NSString *str = strs[i];
+            if (str.length) {
+                //新的段落
+                if (isNewParagraph) {
+                    [htmlString appendFormat:@"<p style=\"%@\">",paragraphHtmlStyleString];
+                    for (NSString* htmlAttr in paragraphHtmlAttributes) {
+                        [htmlString appendFormat:@"<%@>",htmlAttr];
+                    }
+                    isNewParagraph = false;
+                }
+                [htmlString appendFormat:@"<font style=\"%@\">",htmlStyleString];
+                for (NSString* htmlAttr in htmlAttributes) {
+                    [htmlString appendFormat:@"<%@>",htmlAttr];
+                }
+                [htmlString appendString:str];
+                if (i !=  strs.count - 1) {
+                    [htmlString appendString:@"\n"];
+                }
+                for (NSString* htmlAttr in [htmlAttributes reverseObjectEnumerator]) {
+                    [htmlString appendFormat:@"</%@>",htmlAttr];
+                }
+                [htmlString appendString:@"</font>"];
             }
-            isNewParagraph = false;
-        }
-        [htmlString appendFormat:@"<font style=\"%@\">",htmlStyleString];
-        for (NSString* htmlAttr in htmlAttributes) {
-            [htmlString appendFormat:@"<%@>",htmlAttr];
-        }
-        [htmlString appendString:[self.text substringWithRange:effectiveRange]];
-        for (NSString* htmlAttr in [htmlAttributes reverseObjectEnumerator]) {
-            [htmlString appendFormat:@"</%@>",htmlAttr];
-        }
-        [htmlString appendString:@"</font>"];
-        if ([[self.text substringWithRange:NSMakeRange(effectiveRange.location + effectiveRange.length - 1, 1)] isEqualToString:@"\n"]) {
-            [htmlString appendString:@"</p>"];
-            isNewParagraph = true;
+            //只要不是最后一段，则说明前面有一个换行符，则结束段落，开始新的段落
+            if (i !=  strs.count - 1) {
+                [htmlString appendString:@"</p>"];
+                isNewParagraph = true;
+            }
         }
     }
     [htmlString appendString:@"</p>"];
     return htmlString;
+}
+-(void)setHtml:(NSString *)htmlString{
+    const char *c_html = [htmlString UTF8String];
+    long index = 0;
+    unsigned int count = 0;
+    char *content = malloc(strlen(c_html));
+    struct HtmlElement *elements = analy_html(c_html, &index, &count, content);
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]init];
+    for (int i = 0; i < count; i++) {
+        YIMEditerDrawAttributes *paragraphAttributes = [[YIMEditerDrawAttributes alloc]init];
+        for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+            NSString* content = @"";
+            [paragraphAttributes updateAttributed:[obj attributesUseHtmlElement:elements[i] isParagraphElement:true content:&content]];
+        }
+        for (int j = 0; j < elements[i].sub_elecount; j++) {
+            YIMEditerDrawAttributes *textAttributes = [[YIMEditerDrawAttributes alloc]init];
+            [textAttributes updateAttributed:paragraphAttributes];
+            NSString* elementContent = @"";
+            for (id<YIMEditerStyleChangeObject> obj in self.allObjects) {
+                NSString* content = @"";
+                [textAttributes updateAttributed:[obj attributesUseHtmlElement:elements[i].sub_elements[j] isParagraphElement:false content:&content]];
+                if(content.length){
+                    elementContent = content;
+                }
+            }
+            [attributedString appendAttributedString:[[NSAttributedString alloc]initWithString:elementContent attributes:textAttributes.textAttributed]];
+        }
+    }
+    self.attributedText = attributedString;
+    
+    HtmlElementRelease(elements, count);
 }
 
 #pragma -mark private method

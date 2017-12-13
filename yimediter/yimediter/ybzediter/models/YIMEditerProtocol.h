@@ -8,6 +8,7 @@
 
 #ifndef YIMEditerProtocol_h
 #define YIMEditerProtocol_h
+#import "HtmlElement.h"
 
 @class YIMEditerStyle;
 @class YIMEditerDrawAttributes;
@@ -37,6 +38,8 @@
 @property(nonatomic,strong,readonly)YIMEditerStyle *currentStyle;
 /**根据文字属性返回一个该Object的style*/
 -(YIMEditerStyle*)styleUseAttributed:(YIMEditerDrawAttributes*)attributed;
+/**根据html标签返回文字属性*/
+-(YIMEditerDrawAttributes*)attributesUseHtmlElement:(struct HtmlElement)element isParagraphElement:(BOOL)isParagraph content:(NSString**)content;
 /** 使用Attributes更新样式，需要在此处更新UI以适应新的样式**/
 -(void)updateUIWithTextAttributes:(YIMEditerDrawAttributes*)attributed;
 
