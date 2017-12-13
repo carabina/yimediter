@@ -241,6 +241,13 @@
 -(YIMEditerStyle*)defualtStyle{
     return [YIMEditerTextStyle createDefualtStyle];
 }
+-(YIMEditerDrawAttributes*)attributesUseHtmlElement:(struct HtmlElement)element isParagraphElement:(BOOL)isParagraph content:(NSString**)content{
+    if (isParagraph) {
+        return [[YIMEditerDrawAttributes alloc]initWithAttributeString:@{}];
+    }else{
+        return [[YIMEditerTextStyle createWithHtmlElement:element content:content]outPutAttributed];
+    }
+}
 
 
 @end

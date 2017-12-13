@@ -1,4 +1,4 @@
-//
+ //
 //  YIMEditerTextColorCell.m
 //  yimediter
 //
@@ -9,6 +9,7 @@
 #import "YIMEditerTextColorCell.h"
 #import "YIMScrollSelectView.h"
 #import "YIMEditerTextStyle.h"
+#import "UIColor+YIMEditerExtend.h"
 
 
 @interface YIMEditerTextColorCell()<YIMScrollSelectViewDelegate,YIMScrollSelectViewDatasource>{
@@ -49,9 +50,14 @@
 
 #pragma -mark get set
 -(void)setColor:(UIColor *)color{
-    NSAssert([_colorArray containsObject:color], @"不包含选择颜色");
+    NSInteger index = -1;
+    for (NSInteger i = 0;i < _colorArray.count;i++) {
+        if ([[_colorArray[i] hexString] isEqualToString:[color hexString]]) {
+            index = i;
+        }
+    }
+    NSAssert(index!=-1, @"不包含选择颜色");
     _color = color;
-    NSInteger index = [_colorArray indexOfObject:color];
     [self.selectView selectedIndex:index animation:true];
 }
 

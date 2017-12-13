@@ -35,5 +35,10 @@
     return @[];
 }
 
++(instancetype)createWithHtmlElement:(struct HtmlElement)element content:(NSString *__autoreleasing *)content{
+    *content = @"";
+    return [super init];
+}
+
 
 @end

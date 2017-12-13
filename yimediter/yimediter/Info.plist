@@ -21,16 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
-	<array>
-		<string>行楷-Bold.ttc</string>
-		<string>傲娇体.ttf</string>
-		<string>行楷-Regular.ttc</string>
-		<string>山文丰手写体.ttf</string>
-		<string>杨任东竹石体-Bold.ttf</string>
-		<string>伯乐钢笔行书体.ttf</string>
-		<string>杨任东竹石体-Regular.ttf</string>
-		<string>Kaiti.ttf</string>
-	</array>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

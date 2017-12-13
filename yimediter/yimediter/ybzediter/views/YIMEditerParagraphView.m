@@ -10,6 +10,7 @@
 #import "YIMEditerParagraphAlignmentCell.h"
 #import "YIMEditerParagraphLineIndentCell.h"
 #import "YIMEditerParagraphSpacingCell.h"
+#import "YIMEditerDrawAttributes.h"
 
 @interface YIMEditerParagraphView()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView *tableView;
@@ -142,7 +143,13 @@
 -(YIMEditerStyle*)defualtStyle{
     return [YIMEditerParagraphStyle createDefualtStyle];
 }
-
+-(YIMEditerDrawAttributes*)attributesUseHtmlElement:(struct HtmlElement)element isParagraphElement:(BOOL)isParagraph content:(NSString**)content{
+    if (!isParagraph) {
+        return [[YIMEditerDrawAttributes alloc]initWithAttributeString:@{}];
+    }else{
+        return [[YIMEditerParagraphStyle createWithHtmlElement:element content:content]outPutAttributed];
+    }
+}
 
 
 @end

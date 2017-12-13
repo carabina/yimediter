@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "YIMEditerFontFamilyManager.h"
+#import "HtmlElement.h"
 
 @interface AppDelegate ()
 
@@ -18,30 +19,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSTextEffectAttributeName:@"1"}];
-    [attributedString appendAttributedString:[[NSAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSTextEffectAttributeName:@"1"}]];
-    [attributedString appendAttributedString:[[NSAttributedString alloc]initWithString:@"0123456789" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor],NSTextEffectAttributeName:@"1"}]];
-    [attributedString addAttributes:@{NSTextEffectAttributeName:@"2"} range:NSMakeRange(0, attributedString.length)];
-    
-    NSRange range = NSMakeRange(0, 0);
-    NSDictionary *dict = [attributedString attributesAtIndex:0 longestEffectiveRange:&range inRange:NSMakeRange(0, 2)];
-    
-    NSLog(@"%@",dict);
-    
-    
-    
-    
-    YIMEditerFontFamilyManager *manager = [YIMEditerFontFamilyManager defualtManager];
-    //注册字体
-    [manager regiestFont:@"Kaiti"];
-    [manager regiestFont:@"Xingkai SC"];
-    [manager regiestFont:@"YRDZST"];
-    [manager regiestFont:@"ShanWenFeng"];
-    [manager regiestFont:@"®ÀÖ"];
-    [manager regiestFont:@"?"];
-    
     ViewController *vc = [ViewController new];
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController: vc];
     return YES;

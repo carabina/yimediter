@@ -74,9 +74,11 @@
 -(NSString*)htmlStyle{
     NSMutableString* style = [NSMutableString string];
     if (self.firstLineIndent) {
-        [style appendString:@"text-indent: 14px;"];
+        [style appendString:@"text-indent:14px;"];
+    }else{
+        [style appendString:@"text-indent:0px;"];
     }
-    [style appendFormat:@"line-height: %.1fpx;",self.lineSpacing + self.fontSize];
+    [style appendFormat:@"line-height:%.1fpx;",self.lineSpacing + 16];
     
     NSString* textAlign = @"left";
     switch (self.alignment) {
@@ -91,6 +93,45 @@
     }
     [style appendFormat:@"text-align:%@;",textAlign];
     return style;
+}
+
++(instancetype)createWithHtmlElement:(struct HtmlElement)element content:(NSString *__autoreleasing *)content{
+    YIMEditerParagraphStyle* paragraphStyle = [YIMEditerParagraphStyle createDefualtStyle];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:element.attr_json length:strlen(element.attr_json)] options:NSJSONReadingMutableLeaves error:&error];
+    if (!error && [json isKindOfClass:[NSDictionary class]] && [json.allKeys containsObject:@"style"]) {
+        NSString* style = json[@"style"];
+        NSArray<NSString*>* attrs = [style componentsSeparatedByString:@";"];
+        for (NSString* attr in attrs) {
+            NSArray<NSString*>* key_value = [attr componentsSeparatedByString:@":"];
+            if (key_value.count == 2) {
+                if ([key_value[0] isEqualToString:@"text-indent"]) {
+                    NSString* value = key_value[1];
+                    if ([value hasSuffix:@"px"]) {
+                        paragraphStyle.firstLineIndent = [value substringToIndex:value.length - 2].integerValue != 0;
+                    }
+                }
+                if ([key_value[0] isEqualToString:@"line-height"]) {
+                    NSString* value = key_value[1];
+                    if ([value hasSuffix:@"px"]) {
+                        paragraphStyle.lineSpacing = [value substringToIndex:value.length - 2].integerValue - 16;
+                    }
+                }
+                if ([key_value[0] isEqualToString:@"text-align"]) {
+                    if ([key_value[1] isEqualToString:@"left"]) {
+                        paragraphStyle.alignment = NSTextAlignmentLeft;
+                    }
+                    if ([key_value[1] isEqualToString:@"center"]) {
+                        paragraphStyle.alignment = NSTextAlignmentCenter;
+                    }
+                    if ([key_value[1] isEqualToString:@"right"]) {
+                        paragraphStyle.alignment = NSTextAlignmentRight;
+                    }
+                }
+            }
+        }
+    }
+    return paragraphStyle;
 }
 
 
